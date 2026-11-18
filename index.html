@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full-Screen Realistic Flipbook</title>
+  <title>Frutiger Aero Flipbook</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,7 +12,8 @@
     body {
       margin: 0;
       padding: 0;
-      background: #1e1e24;
+      /* Frutiger Aero aesthetic: vibrant sky blue gradient, lush greens, airy feel */
+      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #76f2ff 100%);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -20,38 +21,185 @@
       height: 100vh;
       overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      position: relative;
     }
 
-    /* Full-screen responsive wrapper with comfortable viewport margin */
+    /* Floating bubbles and light bokeh background elements for Frutiger Aero vibe */
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.4) 0px, transparent 40px),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.3) 0px, transparent 60px),
+        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.25) 0px, transparent 30px),
+        radial-gradient(circle at 15% 85%, rgba(255, 255, 255, 0.35) 0px, transparent 50px);
+      z-index: 0;
+    }
+
+    /* Swimming Goldfish Container & Animation */
+    .goldfish-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .goldfish {
+      position: absolute;
+      width: 70px;
+      height: 35px;
+      background: radial-gradient(ellipse at 70% 50%, #ffaa00 0%, #ff4500 70%, #cc2200 100%);
+      border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+      box-shadow: inset -5px -2px 10px rgba(0,0,0,0.2), 0 0 15px rgba(255,165,0,0.6);
+      animation: swim 18s linear infinite;
+    }
+
+    /* Goldfish Tail */
+    .goldfish::after {
+      content: "";
+      position: absolute;
+      right: -18px;
+      top: 4px;
+      width: 0;
+      height: 0;
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+      border-left: 20px solid #ff5500;
+      border-radius: 50%;
+      animation: tail-wag 0.6s ease-in-out infinite alternate;
+      transform-origin: left center;
+    }
+
+    /* Goldfish Fin */
+    .goldfish::before {
+      content: "";
+      position: absolute;
+      left: 25px;
+      top: -10px;
+      width: 15px;
+      height: 12px;
+      background: #ff7700;
+      border-radius: 50% 50% 0 0;
+      transform: rotate(-30deg);
+    }
+
+    /* Second Goldfish with different delay/path */
+    .goldfish.fish2 {
+      top: 60%;
+      transform: scale(0.7);
+      animation: swim2 24s linear infinite;
+      animation-delay: -5s;
+    }
+
+    @keyframes swim {
+      0% {
+        left: -100px;
+        top: 70%;
+        transform: scaleX(1) translateY(0) rotate(5deg);
+      }
+      30% {
+        top: 30%;
+        transform: scaleX(1) translateY(-20px) rotate(-10deg);
+      }
+      50% {
+        left: 55vw;
+        top: 20%;
+        transform: scaleX(1) translateY(10px) rotate(5deg);
+      }
+      51% {
+        transform: scaleX(-1) translateY(10px) rotate(-5deg);
+      }
+      80% {
+        top: 60%;
+        transform: scaleX(-1) translateY(-15px) rotate(10deg);
+      }
+      100% {
+        left: 105vw;
+        top: 50%;
+        transform: scaleX(-1) translateY(0) rotate(-5deg);
+      }
+    }
+
+    @keyframes swim2 {
+      0% {
+        right: -100px;
+        left: auto;
+        top: 20%;
+        transform: scaleX(-1) rotate(-5deg);
+      }
+      40% {
+        top: 75%;
+        transform: scaleX(-1) rotate(15deg);
+      }
+      50% {
+        right: 50vw;
+        left: auto;
+        top: 80%;
+        transform: scaleX(-1) rotate(-5deg);
+      }
+      51% {
+        transform: scaleX(1) rotate(5deg);
+      }
+      80% {
+        top: 30%;
+        transform: scaleX(1) rotate(-10deg);
+      }
+      100% {
+        right: 105vw;
+        left: auto;
+        top: 40%;
+        transform: scaleX(1) rotate(5deg);
+      }
+    }
+
+    @keyframes tail-wag {
+      0% { transform: rotate(-15deg); }
+      100% { transform: rotate(15deg); }
+    }
+
+    /* Full-screen responsive wrapper */
     .book-wrapper {
       width: 92vw;
       height: 90vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 10;
+      /* Glossy Frutiger Aero outer frame glow */
+      filter: drop-shadow(0 15px 35px rgba(0, 50, 100, 0.4));
     }
 
-    /* Individual Page Styling */
+    /* Individual Glossy Page Styling */
     .page {
-      background: linear-gradient(to right, #fdfbf7 0%, #fff 5%, #fff 95%, #f4f1ea 100%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.95) 100%);
       padding: 40px 50px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border: 1px solid #dcd6c8;
-      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: inset 0 0 30px rgba(0, 150, 255, 0.05);
+      backdrop-filter: blur(5px);
     }
 
     /* Subtle spine crease shadow on left and right pages */
     .page.--left {
       border-right: none;
-      box-shadow: inset -12px 0 20px -10px rgba(0, 0, 0, 0.12);
+      box-shadow: inset -12px 0 20px -10px rgba(0, 100, 200, 0.15);
     }
 
     .page.--right {
       border-left: none;
-      box-shadow: inset 12px 0 20px -10px rgba(0, 0, 0, 0.12);
+      box-shadow: inset 12px 0 20px -10px rgba(0, 100, 200, 0.15);
     }
 
     .page-content {
@@ -60,43 +208,52 @@
 
     .page h1 {
       font-size: 2.2rem;
-      color: #1a1a1a;
+      color: #004488;
       margin-top: 0;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.8);
     }
 
     .page h2 {
       font-size: 1.6rem;
-      color: #222;
+      color: #0055aa;
       margin-top: 0;
-      border-bottom: 2px solid #eee;
+      border-bottom: 2px solid rgba(0, 150, 255, 0.2);
       padding-bottom: 10px;
     }
 
     .page p, .page li {
-      color: #444;
+      color: #2c3e50;
       font-size: 1.05rem;
       line-height: 1.6;
     }
 
     .page-footer {
       font-size: 0.85rem;
-      color: #888;
+      color: #0072ff;
       text-align: right;
-      border-top: 1px solid #eee;
+      border-top: 1px solid rgba(0, 150, 255, 0.15);
       padding-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
+  <!-- Animated Frutiger Aero Goldfish Background Layer -->
+  <div class="goldfish-container">
+    <div class="goldfish"></div>
+    <div class="goldfish fish2"></div>
+  </div>
+
+  <!-- Flipbook Container -->
   <div class="book-wrapper">
     <div id="book">
 
       <!-- Page 1 -->
       <div class="page" data-density="soft">
         <div class="page-content">
-          <h1>My Portfolio</h1>
-          <p>Welcome to my interactive full-screen flipbook website. Grab any corner or click to turn the flexible pages just like a real book.</p>
+          <h1>Eco-Sphere Portfolio</h1>
+          <p>Welcome to this Frutiger Aero inspired interactive flipbook. Dive into clean air, bright blue skies, and swimming digital goldfish!</p>
         </div>
         <div class="page-footer">Page 1</div>
       </div>
@@ -105,8 +262,8 @@
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>About Me</h2>
-          <p>I am a web developer focused on crafting tactile, interactive digital experiences that feel intuitive and memorable.</p>
-          <p><strong>Core Stack:</strong> HTML5, CSS3, JavaScript, React, WebGL</p>
+          <p>Crafting luminous, optimistic user interfaces inspired by the glossy skeuomorphic aesthetics of the late 2000s.</p>
+          <p><strong>Core Stack:</strong> HTML5, CSS3, JavaScript, WebGL</p>
         </div>
         <div class="page-footer">Page 2</div>
       </div>
@@ -116,9 +273,9 @@
         <div class="page-content">
           <h2>Featured Projects</h2>
           <ul>
-            <li><strong>Project Alpha:</strong> Real-time analytics dashboard.</li>
-            <li><strong>Project Beta:</strong> Interactive 3D storefront.</li>
-            <li><strong>Project Gamma:</strong> Minimalist task manager.</li>
+            <li><strong>AquaGlass UI:</strong> Translucent glassmorphism components.</li>
+            <li><strong>BioSphere 3D:</strong> Interactive nature ecosystem simulation.</li>
+            <li><strong>CloudSync OS:</strong> Skeuomorphic cloud manager app.</li>
           </ul>
         </div>
         <div class="page-footer">Page 3</div>
@@ -128,92 +285,92 @@
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>Design Philosophy</h2>
-          <p>Great interfaces shouldn't feel flat. By borrowing physical metaphors like paper physics, lighting, and depth, users naturally understand how to navigate.</p>
+          <p>Technology should feel alive, touchable, and optimistic. Rich gradients, glossy reflections, and organic life bring warmth to digital spaces.</p>
         </div>
         <div class="page-footer">Page 4</div>
       </div>
 
-      <!-- Page 5 (Added) -->
+      <!-- Page 5 -->
       <div class="page" data-density="soft">
         <div class="page-content">
-          <h2>Case Study: Alpha</h2>
-          <p>Built to process over 50,000 live data events per second without dropping frames, utilizing WebSockets and hardware-accelerated canvas rendering.</p>
+          <h2>Case Study: AquaGlass</h2>
+          <p>Engineered a multi-layered glass UI framework utilizing advanced CSS backdrop filters and smooth hardware-accelerated transitions.</p>
         </div>
         <div class="page-footer">Page 5</div>
       </div>
 
-      <!-- Page 6 (Added) -->
+      <!-- Page 6 -->
       <div class="page" data-density="soft">
         <div class="page-content">
-          <h2>Case Study: Beta</h2>
-          <p>Increased user session duration by 42% after replacing traditional product grids with a spatial, interactive catalog experience.</p>
+          <h2>Case Study: BioSphere</h2>
+          <p>Simulated real-time aquatic schooling behaviors and bubble dynamics using lightweight canvas particle systems.</p>
         </div>
         <div class="page-footer">Page 6</div>
       </div>
 
-      <!-- Page 7 (Added) -->
+      <!-- Page 7 -->
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>Technical Skills</h2>
           <ul>
-            <li>Frontend Architecture & State Management</li>
-            <li>Interactive Motion & Physics Animations</li>
+            <li>Advanced CSS Shaders & Gradients</li>
+            <li>Interactive Motion & Fluid Physics</li>
             <li>Responsive Layout Engineering</li>
-            <li>REST & GraphQL API Integration</li>
+            <li>Performance Optimization</li>
           </ul>
         </div>
         <div class="page-footer">Page 7</div>
       </div>
 
-      <!-- Page 8 (Added) -->
+      <!-- Page 8 -->
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>Work Experience</h2>
-          <p><strong>Senior Frontend Engineer</strong> — Creative Tech Studio (2024–Present)</p>
-          <p>Leading interactive web campaigns and design systems for global consumer brands.</p>
+          <p><strong>Senior Interface Designer</strong> — AeroTech Studios (2024–Present)</p>
+          <p>Leading immersive web design initiatives combining skeuomorphic realism with modern responsive web standards.</p>
         </div>
         <div class="page-footer">Page 8</div>
       </div>
 
-      <!-- Page 9 (Added) -->
+      <!-- Page 9 -->
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>Open Source</h2>
-          <p>Contributor to several lightweight UI animation utilities and accessibility testing tools used by thousands of developers every month.</p>
+          <p>Active creator of lightweight UI gloss libraries, bubble generators, and nostalgic digital aesthetics.</p>
         </div>
         <div class="page-footer">Page 9</div>
       </div>
 
-      <!-- Page 10 (Added) -->
+      <!-- Page 10 -->
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>Client Testimonials</h2>
-          <p>"Transforming our standard scrolling site into an interactive book completely changed how clients engage with our annual report."</p>
-          <p>— <em>Creative Director, Studio North</em></p>
+          <p>"The vibrant blue skies and swimming goldfish completely transformed our digital annual report into a joyful experience."</p>
+          <p>— <em>Creative Director, NeoGlobal</em></p>
         </div>
         <div class="page-footer">Page 10</div>
       </div>
 
-      <!-- Page 11 (Added) -->
+      <!-- Page 11 -->
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>Services Offered</h2>
           <ul>
-            <li>Custom Interactive Websites</li>
-            <li>UI/UX Prototyping & Motion Design</li>
-            <li>Frontend Performance Audits</li>
+            <li>Skeuomorphic & Aero Web Design</li>
+            <li>Interactive Physics Prototyping</li>
+            <li>Performance & UI Audits</li>
           </ul>
         </div>
         <div class="page-footer">Page 11</div>
       </div>
 
-      <!-- Page 12 (Added) -->
+      <!-- Page 12 -->
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>Get in Touch</h2>
-          <p>Ready to build something unique? Reach out anytime to discuss collaborations or new projects.</p>
+          <p>Ready to build something luminous and interactive? Reach out anytime to discuss your next project.</p>
           <p><strong>Email:</strong> hello@yourwebsite.com</p>
-          <p><strong>GitHub:</strong> github.com/yourusername</p>
+          <p><strong>Network:</strong> aero.community/username</p>
         </div>
         <div class="page-footer">Page 12</div>
       </div>
@@ -227,7 +384,6 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const pageFlip = new St.PageFlip(document.getElementById('book'), {
-        // Aspect ratio baseline for a single page (scales automatically to fill screen)
         width: 550,
         height: 733,
         size: 'stretch',
@@ -235,15 +391,13 @@
         maxWidth: 2000,
         minHeight: 400,
         maxHeight: 2000,
-
-        // Realistic flexible paper behavior
-        showCover: false,         // False prevents stiff cardboard cover behavior
-        drawShadow: true,         // Renders dynamic fold shadows as page bends
-        maxShadowOpacity: 0.5,    // Realism of page curl shadow
-        flippingTime: 900,        // Smooth, natural page-turn speed (ms)
-        useMouseEvents: true,     // Allows grabbing and bending corners dynamically
+        showCover: false,
+        drawShadow: true,
+        maxShadowOpacity: 0.5,
+        flippingTime: 900,
+        useMouseEvents: true,
         swipeDistance: 30,
-        showPageCorners: true,    // Peels corner slightly on hover to invite flipping
+        showPageCorners: true,
         mobileScrollSupport: false
       });
 
