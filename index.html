@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Frutiger Aero Flipbook</title>
+  <title>Frutiger Aero Bubble Flipbook</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,7 +12,7 @@
     body {
       margin: 0;
       padding: 0;
-      /* Frutiger Aero aesthetic: vibrant sky blue gradient, lush greens, airy feel */
+      /* Frutiger Aero aesthetic: vibrant sky blue gradient, lush aquatic feel */
       background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #76f2ff 100%);
       display: flex;
       justify-content: center;
@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* Floating bubbles and light bokeh background elements for Frutiger Aero vibe */
+    /* Floating light bokeh background elements */
     body::before, body::after {
       content: "";
       position: absolute;
@@ -41,8 +41,8 @@
       z-index: 0;
     }
 
-    /* Swimming Goldfish Container & Animation */
-    .goldfish-container {
+    /* Realistic Glossy Bubbles Background Container */
+    .bubble-container {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -53,117 +53,64 @@
       z-index: 1;
     }
 
-    .goldfish {
+    .bubble {
       position: absolute;
-      width: 70px;
-      height: 35px;
-      background: radial-gradient(ellipse at 70% 50%, #ffaa00 0%, #ff4500 70%, #cc2200 100%);
-      border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
-      box-shadow: inset -5px -2px 10px rgba(0,0,0,0.2), 0 0 15px rgba(255,165,0,0.6);
-      animation: swim 18s linear infinite;
-    }
-
-    /* Goldfish Tail */
-    .goldfish::after {
-      content: "";
-      position: absolute;
-      right: -18px;
-      top: 4px;
-      width: 0;
-      height: 0;
-      border-top: 14px solid transparent;
-      border-bottom: 14px solid transparent;
-      border-left: 20px solid #ff5500;
+      bottom: -80px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.15) 30%, rgba(0, 150, 255, 0.1) 70%, rgba(0, 90, 180, 0.3) 100%);
       border-radius: 50%;
-      animation: tail-wag 0.6s ease-in-out infinite alternate;
-      transform-origin: left center;
+      box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.9), 0 0 12px rgba(0, 180, 255, 0.4);
+      animation: rise linear infinite;
     }
 
-    /* Goldfish Fin */
-    .goldfish::before {
+    /* Specular highlight for realistic glass/water refraction */
+    .bubble::after {
       content: "";
       position: absolute;
-      left: 25px;
-      top: -10px;
-      width: 15px;
-      height: 12px;
-      background: #ff7700;
-      border-radius: 50% 50% 0 0;
-      transform: rotate(-30deg);
+      top: 15%;
+      left: 20%;
+      width: 25%;
+      height: 25%;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 50%;
+      filter: blur(1px);
     }
 
-    /* Second Goldfish with different delay/path */
-    .goldfish.fish2 {
-      top: 60%;
-      transform: scale(0.7);
-      animation: swim2 24s linear infinite;
-      animation-delay: -5s;
+    /* Secondary smaller specular dot */
+    .bubble::before {
+      content: "";
+      position: absolute;
+      top: 45%;
+      left: 12%;
+      width: 12%;
+      height: 12%;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      filter: blur(0.5px);
     }
 
-    @keyframes swim {
+    /* Individual Bubble Variations */
+    .b1 { width: 45px; height: 45px; left: 10%; animation-duration: 7s; animation-delay: 0s; }
+    .b2 { width: 70px; height: 70px; left: 25%; animation-duration: 11s; animation-delay: -3s; }
+    .b3 { width: 30px; height: 30px; left: 40%; animation-duration: 6s; animation-delay: -1s; }
+    .b4 { width: 90px; height: 90px; left: 60%; animation-duration: 14s; animation-delay: -5s; }
+    .b5 { width: 50px; height: 50px; left: 75%; animation-duration: 8s; animation-delay: -2s; }
+    .b6 { width: 35px; height: 35px; left: 90%; animation-duration: 9s; animation-delay: -4s; }
+
+    @keyframes rise {
       0% {
-        left: -100px;
-        top: 70%;
-        transform: scaleX(1) translateY(0) rotate(5deg);
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0;
       }
-      30% {
-        top: 30%;
-        transform: scaleX(1) translateY(-20px) rotate(-10deg);
+      10% {
+        opacity: 0.85;
       }
-      50% {
-        left: 55vw;
-        top: 20%;
-        transform: scaleX(1) translateY(10px) rotate(5deg);
-      }
-      51% {
-        transform: scaleX(-1) translateY(10px) rotate(-5deg);
-      }
-      80% {
-        top: 60%;
-        transform: scaleX(-1) translateY(-15px) rotate(10deg);
+      90% {
+        opacity: 0.85;
       }
       100% {
-        left: 105vw;
-        top: 50%;
-        transform: scaleX(-1) translateY(0) rotate(-5deg);
+        transform: translateY(-110vh) translateX(40px) scale(1.05);
+        opacity: 0;
       }
-    }
-
-    @keyframes swim2 {
-      0% {
-        right: -100px;
-        left: auto;
-        top: 20%;
-        transform: scaleX(-1) rotate(-5deg);
-      }
-      40% {
-        top: 75%;
-        transform: scaleX(-1) rotate(15deg);
-      }
-      50% {
-        right: 50vw;
-        left: auto;
-        top: 80%;
-        transform: scaleX(-1) rotate(-5deg);
-      }
-      51% {
-        transform: scaleX(1) rotate(5deg);
-      }
-      80% {
-        top: 30%;
-        transform: scaleX(1) rotate(-10deg);
-      }
-      100% {
-        right: 105vw;
-        left: auto;
-        top: 40%;
-        transform: scaleX(1) rotate(5deg);
-      }
-    }
-
-    @keyframes tail-wag {
-      0% { transform: rotate(-15deg); }
-      100% { transform: rotate(15deg); }
     }
 
     /* Full-screen responsive wrapper */
@@ -174,7 +121,6 @@
       justify-content: center;
       align-items: center;
       z-index: 10;
-      /* Glossy Frutiger Aero outer frame glow */
       filter: drop-shadow(0 15px 35px rgba(0, 50, 100, 0.4));
     }
 
@@ -191,7 +137,6 @@
       backdrop-filter: blur(5px);
     }
 
-    /* Subtle spine crease shadow on left and right pages */
     .page.--left {
       border-right: none;
       box-shadow: inset -12px 0 20px -10px rgba(0, 100, 200, 0.15);
@@ -239,21 +184,25 @@
 </head>
 <body>
 
-  <!-- Animated Frutiger Aero Goldfish Background Layer -->
-  <div class="goldfish-container">
-    <div class="goldfish"></div>
-    <div class="goldfish fish2"></div>
+  <!-- Frutiger Aero Realistic Bubble Background Layer -->
+  <div class="bubble-container">
+    <div class="bubble b1"></div>
+    <div class="bubble b2"></div>
+    <div class="bubble b3"></div>
+    <div class="bubble b4"></div>
+    <div class="bubble b5"></div>
+    <div class="bubble b6"></div>
   </div>
 
   <!-- Flipbook Container -->
   <div class="book-wrapper">
     <div id="book">
 
-      <!-- Page 1 -->
+      <!-- Page 1 (Starts as a Single Standalone Cover Page) -->
       <div class="page" data-density="soft">
         <div class="page-content">
           <h1>Eco-Sphere Portfolio</h1>
-          <p>Welcome to this Frutiger Aero inspired interactive flipbook. Dive into clean air, bright blue skies, and swimming digital goldfish!</p>
+          <p>Welcome to this Frutiger Aero inspired interactive flipbook. Dive into clean skies, glossy glass reflections, and rising digital bubbles!</p>
         </div>
         <div class="page-footer">Page 1</div>
       </div>
@@ -303,7 +252,7 @@
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>Case Study: BioSphere</h2>
-          <p>Simulated real-time aquatic schooling behaviors and bubble dynamics using lightweight canvas particle systems.</p>
+          <p>Simulated real-time bubble buoyancy and fluid refraction dynamics using lightweight canvas particle systems.</p>
         </div>
         <div class="page-footer">Page 6</div>
       </div>
@@ -345,7 +294,7 @@
       <div class="page" data-density="soft">
         <div class="page-content">
           <h2>Client Testimonials</h2>
-          <p>"The vibrant blue skies and swimming goldfish completely transformed our digital annual report into a joyful experience."</p>
+          <p>"The vibrant blue skies and floating bubbles completely transformed our digital annual report into a joyful experience."</p>
           <p>— <em>Creative Director, NeoGlobal</em></p>
         </div>
         <div class="page-footer">Page 10</div>
@@ -391,7 +340,7 @@
         maxWidth: 2000,
         minHeight: 400,
         maxHeight: 2000,
-        showCover: false,
+        showCover: true,          /* Enables single-page view for the first page */
         drawShadow: true,
         maxShadowOpacity: 0.5,
         flippingTime: 900,
