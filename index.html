@@ -3,121 +3,250 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Flipbook Website</title>
+  <title>Full-Screen Realistic Flipbook</title>
   <style>
-    /* Reset and Center the Flipbook on Screen */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #2b2b2b;
+      padding: 0;
+      background: #1e1e24;
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 100vw;
       height: 100vh;
-      overflow: hidden; /* Prevents whole-page scrolling */
-      font-family: Arial, sans-serif;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* Flipbook Container Shadow Effect */
-    .page-flip-container {
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+    /* Full-screen responsive wrapper with comfortable viewport margin */
+    .book-wrapper {
+      width: 92vw;
+      height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     /* Individual Page Styling */
     .page {
-      background-color: #ffffff;
-      padding: 40px;
-      box-sizing: border-box;
-      overflow: hidden; /* Hides overflow content so it stays inside the page */
+      background: linear-gradient(to right, #fdfbf7 0%, #fff 5%, #fff 95%, #f4f1ea 100%);
+      padding: 40px 50px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border-left: 1px solid rgba(0, 0, 0, 0.1);
+      border: 1px solid #dcd6c8;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.03);
     }
 
-    /* Component Styling inside Pages */
-    .page h1, .page h2 {
-      color: #333;
+    /* Subtle spine crease shadow on left and right pages */
+    .page.--left {
+      border-right: none;
+      box-shadow: inset -12px 0 20px -10px rgba(0, 0, 0, 0.12);
+    }
+
+    .page.--right {
+      border-left: none;
+      box-shadow: inset 12px 0 20px -10px rgba(0, 0, 0, 0.12);
+    }
+
+    .page-content {
+      flex: 1;
+    }
+
+    .page h1 {
+      font-size: 2.2rem;
+      color: #1a1a1a;
       margin-top: 0;
     }
 
+    .page h2 {
+      font-size: 1.6rem;
+      color: #222;
+      margin-top: 0;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+
     .page p, .page li {
-      color: #555;
-      line-height: 1.5;
+      color: #444;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .page-footer {
+      font-size: 0.85rem;
+      color: #888;
+      text-align: right;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Book Container with Component Pages -->
-  <div id="book">
-    
-    <!-- Page 1: Hero / Cover Component -->
-    <div class="page">
-      <div class="hero-component">
-        <h1>My Portfolio</h1>
-        <p>Welcome to my interactive flipbook website. Flip through the pages to explore my background and projects.</p>
-      </div>
-      <div>
-        <p><em>Swipe or click the corner to turn.</em></p>
-      </div>
-    </div>
+  <div class="book-wrapper">
+    <div id="book">
 
-    <!-- Page 2: About Component -->
-    <div class="page">
-      <div class="about-component">
-        <h2>About Me</h2>
-        <p>I am a web developer passionate about building creative, interactive user experiences that break away from traditional vertical scrolling.</p>
-        <p><strong>Skills:</strong> HTML5, CSS3, JavaScript, React, UI/UX Design</p>
+      <!-- Page 1 -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h1>My Portfolio</h1>
+          <p>Welcome to my interactive full-screen flipbook website. Grab any corner or click to turn the flexible pages just like a real book.</p>
+        </div>
+        <div class="page-footer">Page 1</div>
       </div>
-    </div>
 
-    <!-- Page 3: Projects Component -->
-    <div class="page">
-      <div class="projects-component">
-        <h2>Featured Projects</h2>
-        <ul>
-          <li><strong>Project Alpha:</strong> A real-time data visualization dashboard.</li>
-          <li><strong>Project Beta:</strong> An interactive e-commerce shopping experience.</li>
-          <li><strong>Project Gamma:</strong> A minimalist productivity mobile app.</li>
-        </ul>
+      <!-- Page 2 -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>About Me</h2>
+          <p>I am a web developer focused on crafting tactile, interactive digital experiences that feel intuitive and memorable.</p>
+          <p><strong>Core Stack:</strong> HTML5, CSS3, JavaScript, React, WebGL</p>
+        </div>
+        <div class="page-footer">Page 2</div>
       </div>
-    </div>
 
-    <!-- Page 4: Contact Component -->
-    <div class="page">
-      <div class="contact-component">
-        <h2>Get in Touch</h2>
-        <p>I'm always open to discussing new projects, creative ideas, or opportunities.</p>
-        <p><strong>Email:</strong> hello@yourwebsite.com</p>
-        <p><strong>GitHub:</strong> github.com/yourusername</p>
+      <!-- Page 3 -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Featured Projects</h2>
+          <ul>
+            <li><strong>Project Alpha:</strong> Real-time analytics dashboard.</li>
+            <li><strong>Project Beta:</strong> Interactive 3D storefront.</li>
+            <li><strong>Project Gamma:</strong> Minimalist task manager.</li>
+          </ul>
+        </div>
+        <div class="page-footer">Page 3</div>
       </div>
-    </div>
 
+      <!-- Page 4 -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Design Philosophy</h2>
+          <p>Great interfaces shouldn't feel flat. By borrowing physical metaphors like paper physics, lighting, and depth, users naturally understand how to navigate.</p>
+        </div>
+        <div class="page-footer">Page 4</div>
+      </div>
+
+      <!-- Page 5 (Added) -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Case Study: Alpha</h2>
+          <p>Built to process over 50,000 live data events per second without dropping frames, utilizing WebSockets and hardware-accelerated canvas rendering.</p>
+        </div>
+        <div class="page-footer">Page 5</div>
+      </div>
+
+      <!-- Page 6 (Added) -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Case Study: Beta</h2>
+          <p>Increased user session duration by 42% after replacing traditional product grids with a spatial, interactive catalog experience.</p>
+        </div>
+        <div class="page-footer">Page 6</div>
+      </div>
+
+      <!-- Page 7 (Added) -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Technical Skills</h2>
+          <ul>
+            <li>Frontend Architecture & State Management</li>
+            <li>Interactive Motion & Physics Animations</li>
+            <li>Responsive Layout Engineering</li>
+            <li>REST & GraphQL API Integration</li>
+          </ul>
+        </div>
+        <div class="page-footer">Page 7</div>
+      </div>
+
+      <!-- Page 8 (Added) -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Work Experience</h2>
+          <p><strong>Senior Frontend Engineer</strong> — Creative Tech Studio (2024–Present)</p>
+          <p>Leading interactive web campaigns and design systems for global consumer brands.</p>
+        </div>
+        <div class="page-footer">Page 8</div>
+      </div>
+
+      <!-- Page 9 (Added) -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Open Source</h2>
+          <p>Contributor to several lightweight UI animation utilities and accessibility testing tools used by thousands of developers every month.</p>
+        </div>
+        <div class="page-footer">Page 9</div>
+      </div>
+
+      <!-- Page 10 (Added) -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Client Testimonials</h2>
+          <p>"Transforming our standard scrolling site into an interactive book completely changed how clients engage with our annual report."</p>
+          <p>— <em>Creative Director, Studio North</em></p>
+        </div>
+        <div class="page-footer">Page 10</div>
+      </div>
+
+      <!-- Page 11 (Added) -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Services Offered</h2>
+          <ul>
+            <li>Custom Interactive Websites</li>
+            <li>UI/UX Prototyping & Motion Design</li>
+            <li>Frontend Performance Audits</li>
+          </ul>
+        </div>
+        <div class="page-footer">Page 11</div>
+      </div>
+
+      <!-- Page 12 (Added) -->
+      <div class="page" data-density="soft">
+        <div class="page-content">
+          <h2>Get in Touch</h2>
+          <p>Ready to build something unique? Reach out anytime to discuss collaborations or new projects.</p>
+          <p><strong>Email:</strong> hello@yourwebsite.com</p>
+          <p><strong>GitHub:</strong> github.com/yourusername</p>
+        </div>
+        <div class="page-footer">Page 12</div>
+      </div>
+
+    </div>
   </div>
 
-  <!-- Load Page-Flip Library from CDN -->
+  <!-- Load Page-Flip Library -->
   <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 
-  <!-- Initialize the Flipbook Script -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const pageFlip = new St.PageFlip(
-        document.getElementById('book'),
-        {
-          width: 450,  // Single page width in pixels
-          height: 650, // Single page height in pixels
-          size: 'stretch', // Automatically scales for smaller screens
-          minWidth: 300,
-          maxWidth: 1000,
-          minHeight: 400,
-          maxHeight: 1000,
-          maxShadowOpacity: 0.5, // 3D shadow depth effect
-          showCover: true,
-          mobileScrollSupport: false // Prevents vertical page bouncing on mobile swipes
-        }
-      );
+      const pageFlip = new St.PageFlip(document.getElementById('book'), {
+        // Aspect ratio baseline for a single page (scales automatically to fill screen)
+        width: 550,
+        height: 733,
+        size: 'stretch',
+        minWidth: 300,
+        maxWidth: 2000,
+        minHeight: 400,
+        maxHeight: 2000,
 
-      // Load all elements with the class 'page' into the book
+        // Realistic flexible paper behavior
+        showCover: false,         // False prevents stiff cardboard cover behavior
+        drawShadow: true,         // Renders dynamic fold shadows as page bends
+        maxShadowOpacity: 0.5,    // Realism of page curl shadow
+        flippingTime: 900,        // Smooth, natural page-turn speed (ms)
+        useMouseEvents: true,     // Allows grabbing and bending corners dynamically
+        swipeDistance: 30,
+        showPageCorners: true,    // Peels corner slightly on hover to invite flipping
+        mobileScrollSupport: false
+      });
+
       pageFlip.loadFromHTML(document.querySelectorAll('.page'));
     });
   </script>
