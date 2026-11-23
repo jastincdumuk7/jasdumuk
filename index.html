@@ -18,12 +18,13 @@
     body {
       margin: 0;
       padding: 0;
-      /* Replace the gradient with your background image */
+      /* Background replaced with skyflower.jpg */
+      background-color: #3a8ee6;
       background-image: url('skyflower.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      background-attachment: fixed; /* Keeps the background locked in place when scrolling/resizing */
+      background-attachment: fixed;
       
       display: flex;
       justify-content: center;
@@ -31,25 +32,12 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      font-family: 'Kulachat Serif' serif;
+      font-family: 'Kulachat Serif', 'Times New Roman', serif;
       position: relative;
       user-select: none;
     }
-    }
 
-    /* Ambient Frutiger Aero light bokeh */
-    body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image: 
-        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.35) 0px, transparent 60px),
-        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.25) 0px, transparent 80px),
-        radial-gradient(circle at 50% 15%, rgba(255, 255, 255, 0.3) 0px, transparent 50px);
-      z-index: 0;
-    }
-
+    /* Interactive Bubble Canvas Layer */
     #bubble-canvas {
       position: absolute;
       inset: 0;
@@ -72,14 +60,26 @@
       align-items: center;
       z-index: 10;
       pointer-events: none;
-      filter: drop-shadow(0 25px 45px rgba(0, 30, 70, 0.5));
+      filter: drop-shadow(0 25px 45px rgba(0, 30, 70, 0.45));
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: center center;
+    }
+
+    /* Zoomed-in state on initial load */
+    .book-wrapper.zoomed-in {
+      transform: scale(2.2);
+      cursor: pointer;
+    }
+
+    .book-wrapper.zoomed-in #book {
+      cursor: pointer;
     }
 
     #book {
       pointer-events: auto;
     }
 
-    /* Page styling: #F7F7E9 background, #0100ff text, thicker type, and center-aligned body text */
+    /* Page styling: #F7F7E9 background, #0100ff text, thicker type, center-aligned body text */
     .page {
       background-color: #F7F7E9 !important;
       color: #0100ff !important;
@@ -89,7 +89,7 @@
       flex-direction: column;
       justify-content: space-between;
       border: 1px solid rgba(1, 0, 255, 0.08);
-      font-weight: 600; /* Thicker type */
+      font-weight: 600;
     }
 
     /* Realistic center binding shadow curvature on left and right pages */
@@ -133,14 +133,15 @@
       font-weight: 600;
     }
 
+    /* Cover image placeholder (2" x 1" proportion) */
     .cover-image-placeholder {
-      width: 160px;
-      height: 90px;
+      width: 192px;
+      height: 96px;
       border: 2px dashed #0100ff;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 15px 0;
+      margin: 15px auto;
       font-size: 0.8rem;
       color: #0100ff;
       background: rgba(1, 0, 255, 0.03);
@@ -157,7 +158,7 @@
       letter-spacing: 1px;
     }
 
-    /* Moved body text more to the middle vertically and centered nicely */
+    /* Body text centered vertically and horizontally */
     .page-content {
       flex: 1;
       display: flex;
@@ -175,7 +176,7 @@
       color: #0100ff;
     }
 
-    /* Image placeholder box on the top of the page: 2in x 1in proportion (~192px wide x 96px high) */
+    /* Image placeholder box on the top of the page: 2in x 1in proportion (192px x 96px) */
     .image-placeholder-top {
       width: 192px;
       height: 96px;
@@ -219,8 +220,8 @@
   <!-- Interactive Canvas Background -->
   <canvas id="bubble-canvas"></canvas>
 
-  <!-- Flipbook Container -->
-  <div class="book-wrapper">
+  <!-- Flipbook Container (Starts zoomed in on the title page) -->
+  <div class="book-wrapper zoomed-in" id="book-wrapper">
     <div id="book">
 
       <!-- PAGE 1: Title Page (Cover with Image Support) -->
@@ -240,356 +241,4 @@
             <ul class="toc-list">
               <li><span>1. About me</span> <span>pg 1</span></li>
               <li><span>2. Project 1 - Uncanny Valley</span> <span>pg 2-3</span></li>
-              <li><span>3. Project 2 - Quasi-object</span> <span>pg 4-5</span></li>
-              <li><span>4. Project 3</span> <span>pg 6-7</span></li>
-              <li><span>5. Mini Projects</span> <span>pg 8-9</span></li>
-              <li><span>6. How to reach me</span> <span>pg 10</span></li>
-            </ul>
-          </div>
-        </div>
-        <div class="page-number">2</div>
-      </div>
-
-      <!-- PAGE 3 (Spread 1 Left): About Me - pg 1 -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">About Me</div>
-          <div class="image-placeholder-top">Image (2" x 1")</div>
-          <div class="page-content">
-            <p>Hey, my name’s Jastin! I’m currently studying graphic design and broadening my experience in art and design.</p>
-            <p>Design and art are crafts I’ve always been surrounded by. It has taught me to figure out the world visually and shape my perspective in what I see is important in my life.</p>
-          </div>
-        </div>
-        <div class="page-number">1</div>
-      </div>
-
-      <!-- PAGE 4 (Spread 1 Right): About Me (Cont.) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">About Me (Cont.)</div>
-          <div class="page-content">
-            <p>I’ve found them to be my way of communicating what I want to see more in the world. I make sure that what I make represents something about me whatever it may be.</p>
-            <p>I’ve always pictured a world that had more life and color. It’s filled with an exceeding amount of corrupt and negative people and issues and with that I think people should be able to escape and be surrounded by things that give them happiness and life. My escape for example is when I create. We only live one life and we should make the most out of it without having to deal with the destruction of our world and everything in it.</p>
-          </div>
-        </div>
-        <div class="page-number">2</div>
-      </div>
-
-      <!-- PAGE 5 (Spread 2 Left): Project 1 - Uncanny Valley (Pg 2) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Project 1 - Uncanny Valley</div>
-          <div class="image-placeholder-top">Drafts (2" x 1")</div>
-          <div class="page-content">
-            <p><strong>Proposal:</strong></p>
-            <p>For this first project I want to lean into the surrealism of the “uncanny valley” effect. I love the idea of having an element of the poster look unsettling, but then I thought that maybe I wanted something that looked like a vomit of colors and weirdness while still having that semi realistic vibe to it since I had more images that I could use to portray that. I want the poster to also reminisce about nostalgia and childhood.</p>
-            <p><em>*Drafts (Folder: BLENDERR / dumuk)*</em></p>
-          </div>
-        </div>
-        <div class="page-number">2</div>
-      </div>
-
-      <!-- PAGE 6 (Spread 2 Right): Project 1 - Uncanny Valley (Pg 3) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Uncanny Valley (Final)</div>
-          <div class="page-content">
-            <p>I ended up going on a fun and playful route for this project. I thought that incorporating an “Alice in Wonderland” like weirdness made more sense in my eyes. It may look like nonsense to others but to me it’s a representation of what I find somewhat comedic.</p>
-            <p><em>*Final draft*</em></p>
-          </div>
-        </div>
-        <div class="page-number">3</div>
-      </div>
-
-      <!-- PAGE 7 (Spread 3 Left): Project 2 - Quasi-object (Pg 4) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Project 2 - Quasi-object</div>
-          <div class="image-placeholder-top">References (2" x 1")</div>
-          <div class="page-content">
-            <p><em>*References*</em></p>
-            <p><strong>Proposal:</strong></p>
-            <p>For this project I decided to get inspiration from my Pingu keychain who kind of looks like a cowboy sheriff which I thought was cool. I decided to pick this object because I love stop motion and the process behind it. The show Pingu is a stop-motion made in Switzerland and growing up I loved how the actions were shown without the use of real words.</p>
-          </div>
-        </div>
-        <div class="page-number">4</div>
-      </div>
-
-      <!-- PAGE 8 (Spread 3 Right): Project 2 - Quasi-object (Pg 5) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Quasi-object (Final)</div>
-          <div class="page-content">
-            <p><em>*Final*</em></p>
-            <p>Detailed exploration of the Pingu cowboy concept, integrating stop-motion aesthetic principles into digital 3D/graphic composition.</p>
-          </div>
-        </div>
-        <div class="page-number">5</div>
-      </div>
-
-      <!-- PAGE 9 (Spread 4 Left): Project 3 - Time Based Video (Pg 6) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Project 3 - Time Based Video</div>
-          <div class="image-placeholder-top">Media (2" x 1")</div>
-          <div class="page-content">
-            <p>Soon to be added</p>
-          </div>
-        </div>
-        <div class="page-number">6</div>
-      </div>
-
-      <!-- PAGE 10 (Spread 4 Right): Project 3 (Pg 7) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Project 3 (Cont.)</div>
-          <div class="page-content">
-            <p>Time-based multimedia video explorations and storyboards referencing asset folders <strong>BLENDERR</strong> and <strong>dumuk</strong>.</p>
-          </div>
-        </div>
-        <div class="page-number">7</div>
-      </div>
-
-      <!-- PAGE 11 (Spread 5 Left): Mini Projects (Pg 8) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Mini Projects</div>
-          <div class="image-placeholder-top">Image (2" x 1")</div>
-          <div class="page-content">
-            <p>Collection of exploratory graphic design exercises and quick concept iterations.</p>
-          </div>
-        </div>
-        <div class="page-number">8</div>
-      </div>
-
-      <!-- PAGE 12 (Spread 5 Right): Mini Projects (Pg 9) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Mini Projects (Cont.)</div>
-          <div class="page-content">
-            <p>Further experimentation with typography, composition, and color theory.</p>
-          </div>
-        </div>
-        <div class="page-number">9</div>
-      </div>
-
-      <!-- PAGE 13 (Spread 6 Left): How to Reach Me (Pg 10) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">How to Reach Me</div>
-          <div class="image-placeholder-top">Image (2" x 1")</div>
-          <div class="page-content">
-            <p>Feel free to reach out for collaborations, project inquiries, or design discussions!</p>
-            <p><strong>Email:</strong> student@art10c.edu</p>
-            <p><strong>Assets Directory:</strong> /BLENDERR /dumuk</p>
-          </div>
-        </div>
-        <div class="page-number">10</div>
-      </div>
-
-      <!-- PAGE 14: Back Cover / Last Page -->
-      <div class="page cover-page" data-density="hard">
-        <h1>Thank You</h1>
-        <p>Jazee’s Portfolio — 2026</p>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Load Page-Flip Library -->
-  <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const pageFlip = new St.PageFlip(document.getElementById('book'), {
-        width: 550,
-        height: 733,
-        size: 'stretch',
-        minWidth: 300,
-        maxWidth: 2000,
-        minHeight: 400,
-        maxHeight: 2000,
-        showCover: true,
-        drawShadow: true,
-        maxShadowOpacity: 0.08, /* Soft, shadowless feel while maintaining depth */
-        flippingTime: 800,
-        useMouseEvents: true,     /* Drag cursor across pages to flip */
-        swipeDistance: 30,
-        showPageCorners: true,
-        mobileScrollSupport: false
-      });
-
-      pageFlip.loadFromHTML(document.querySelectorAll('.page'));
-
-      // Frutiger Aero Bubble Physics Background
-      const canvas = document.getElementById('bubble-canvas');
-      const ctx = canvas.getContext('2d');
-      let width = canvas.width = window.innerWidth;
-      let height = canvas.height = window.innerHeight;
-
-      window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      });
-
-      const mouse = { x: -9999, y: -9999, vx: 0, vy: 0, lastX: -9999, lastY: -9999 };
-
-      window.addEventListener('mousemove', (e) => {
-        if (mouse.lastX !== -9999) {
-          mouse.vx = e.clientX - mouse.lastX;
-          mouse.vy = e.clientY - mouse.lastY;
-        }
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-        mouse.lastX = e.clientX;
-        mouse.lastY = e.clientY;
-      });
-
-      window.addEventListener('mouseleave', () => {
-        mouse.x = -9999;
-        mouse.y = -9999;
-        mouse.lastX = -9999;
-        mouse.lastY = -9999;
-      });
-
-      class Bubble {
-        constructor(x, y, radius, isMini = false) {
-          this.x = x ?? Math.random() * width;
-          this.y = y ?? height + Math.random() * 200;
-          this.radius = radius ?? (14 + Math.random() * 34);
-          this.baseVy = -(0.5 + Math.random() * 1.2);
-          this.vx = (Math.random() - 0.5) * 0.5;
-          this.vy = this.baseVy;
-          this.wobbleOffset = Math.random() * Math.PI * 2;
-          this.wobbleSpeed = 0.02 + Math.random() * 0.02;
-          this.isMini = isMini;
-          this.life = isMini ? 60 + Math.random() * 40 : Infinity;
-        }
-
-        update() {
-          this.wobbleOffset += this.wobbleSpeed;
-          const dx = this.x - mouse.x;
-          const dy = this.y - mouse.y;
-          const dist = Math.hypot(dx, dy);
-          const interactRadius = this.radius + 110;
-
-          if (dist < interactRadius && dist > 0) {
-            const force = (1 - dist / interactRadius);
-            const angle = Math.atan2(dy, dx);
-            this.vx += Math.cos(angle) * force * 1.4 + mouse.vx * force * 0.08;
-            this.vy += Math.sin(angle) * force * 1.4 + mouse.vy * force * 0.08;
-          }
-
-          this.vx *= 0.94;
-          this.vy += (this.baseVy - this.vy) * 0.04;
-          this.x += this.vx + Math.sin(this.wobbleOffset) * 0.4;
-          this.y += this.vy;
-
-          if (this.isMini) {
-            this.life--;
-            this.radius *= 0.985;
-          }
-
-          if (!this.isMini && this.y < -this.radius * 2) {
-            this.y = height + this.radius * 2;
-            this.x = Math.random() * width;
-            this.vx = 0;
-            this.vy = this.baseVy;
-          }
-        }
-
-        draw() {
-          if (this.radius <= 0.5) return;
-          ctx.save();
-          ctx.translate(this.x, this.y);
-
-          const grad = ctx.createRadialGradient(
-            -this.radius * 0.3, -this.radius * 0.3, this.radius * 0.05,
-            0, 0, this.radius
-          );
-          grad.addColorStop(0, 'rgba(255, 255, 255, 0.85)');
-          grad.addColorStop(0.25, 'rgba(255, 255, 255, 0.25)');
-          grad.addColorStop(0.75, 'rgba(0, 180, 255, 0.12)');
-          grad.addColorStop(1, 'rgba(255, 255, 255, 0.65)');
-
-          ctx.beginPath();
-          ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-          ctx.fillStyle = grad;
-          ctx.fill();
-
-          ctx.lineWidth = 1.2;
-          ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.ellipse(
-            -this.radius * 0.35,
-            -this.radius * 0.35,
-            this.radius * 0.24,
-            this.radius * 0.14,
-            -Math.PI / 4,
-            0,
-            Math.PI * 2
-          );
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
-          ctx.fill();
-
-          ctx.restore();
-        }
-      }
-
-      const bubbles = [];
-      for (let i = 0; i < 30; i++) {
-        bubbles.push(new Bubble(Math.random() * width, Math.random() * height));
-      }
-
-      canvas.addEventListener('click', (e) => {
-        let popped = false;
-        for (let i = bubbles.length - 1; i >= 0; i--) {
-          const b = bubbles[i];
-          if (!b.isMini && Math.hypot(e.clientX - b.x, e.clientY - b.y) <= b.radius + 10) {
-            for (let j = 0; j < 6; j++) {
-              const mini = new Bubble(b.x, b.y, 3 + Math.random() * 4, true);
-              mini.vx = (Math.random() - 0.5) * 6;
-              mini.vy = (Math.random() - 0.5) * 6;
-              bubbles.push(mini);
-            }
-            b.y = height + b.radius * 2;
-            b.x = Math.random() * width;
-            popped = true;
-            break;
-          }
-        }
-        if (!popped) {
-          for (let k = 0; k < 3; k++) {
-            const spawned = new Bubble(
-              e.clientX + (Math.random() - 0.5) * 30,
-              e.clientY + (Math.random() - 0.5) * 30,
-              12 + Math.random() * 20,
-              true
-            );
-            spawned.life = 250;
-            bubbles.push(spawned);
-          }
-        }
-      });
-
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
-        for (let i = bubbles.length - 1; i >= 0; i--) {
-          bubbles[i].update();
-          bubbles[i].draw();
-          if (bubbles[i].life <= 0) {
-            bubbles.splice(i, 1);
-          }
-        }
-        mouse.vx *= 0.8;
-        mouse.vy *= 0.8;
-        requestAnimationFrame(animate);
-      }
-
-      animate();
-    });
-  </script>
-</body>
-</html>
+              <li><span>3. Project 2 - Quasi-object</span> <span>pg
