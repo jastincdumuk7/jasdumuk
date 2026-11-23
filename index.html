@@ -18,16 +18,23 @@
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #76f2ff 100%);
+      /* Replace the gradient with your background image */
+      background-image: url('skyflower.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed; /* Keeps the background locked in place when scrolling/resizing */
+      
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      font-family: 'Kulachat Serif', 'Times New Roman', serif;
+      font-family: 'Kulachat Serif' serif;
       position: relative;
       user-select: none;
+    }
     }
 
     /* Ambient Frutiger Aero light bokeh */
