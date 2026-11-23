@@ -18,14 +18,7 @@
     body {
       margin: 0;
       padding: 0;
-      /* Background replaced with skyflower.jpg */
-      background-color: #3a8ee6;
-      background-image: url('skyflower.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      
+      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #76f2ff 100%);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -37,7 +30,19 @@
       user-select: none;
     }
 
-    /* Interactive Bubble Canvas Layer */
+    /* Ambient Frutiger Aero light bokeh */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.35) 0px, transparent 60px),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.25) 0px, transparent 80px),
+        radial-gradient(circle at 50% 15%, rgba(255, 255, 255, 0.3) 0px, transparent 50px);
+      z-index: 0;
+    }
+
     #bubble-canvas {
       position: absolute;
       inset: 0;
@@ -60,14 +65,14 @@
       align-items: center;
       z-index: 10;
       pointer-events: none;
-      filter: drop-shadow(0 25px 45px rgba(0, 30, 70, 0.45));
+      filter: drop-shadow(0 25px 45px rgba(0, 30, 70, 0.5));
     }
 
     #book {
       pointer-events: auto;
     }
 
-    /* Page styling: #F7F7E9 background, #0100ff text, thicker type, center-aligned body text */
+    /* Page styling: #F7F7E9 background, #0100ff text, thicker type, and center-aligned body text */
     .page {
       background-color: #F7F7E9 !important;
       color: #0100ff !important;
@@ -77,7 +82,7 @@
       flex-direction: column;
       justify-content: space-between;
       border: 1px solid rgba(1, 0, 255, 0.08);
-      font-weight: 600;
+      font-weight: 600; /* Thicker type */
     }
 
     /* Realistic center binding shadow curvature on left and right pages */
@@ -121,15 +126,14 @@
       font-weight: 600;
     }
 
-    /* Cover image placeholder (2" x 1" proportion) */
     .cover-image-placeholder {
-      width: 192px;
-      height: 96px;
+      width: 160px;
+      height: 90px;
       border: 2px dashed #0100ff;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 15px auto;
+      margin: 15px 0;
       font-size: 0.8rem;
       color: #0100ff;
       background: rgba(1, 0, 255, 0.03);
@@ -146,7 +150,7 @@
       letter-spacing: 1px;
     }
 
-    /* Body text centered vertically and horizontally */
+    /* Moved body text more to the middle vertically and centered nicely */
     .page-content {
       flex: 1;
       display: flex;
@@ -164,7 +168,7 @@
       color: #0100ff;
     }
 
-    /* Image placeholder box on the top of the page: 2in x 1in proportion (192px x 96px) */
+    /* Image placeholder box on the top of the page: 2in x 1in proportion (~192px wide x 96px high) */
     .image-placeholder-top {
       width: 192px;
       height: 96px;
@@ -400,9 +404,9 @@
         maxHeight: 2000,
         showCover: true,
         drawShadow: true,
-        maxShadowOpacity: 0.08,
+        maxShadowOpacity: 0.08, /* Soft, shadowless feel while maintaining depth */
         flippingTime: 800,
-        useMouseEvents: true,
+        useMouseEvents: true,     /* Drag cursor across pages to flip */
         swipeDistance: 30,
         showPageCorners: true,
         mobileScrollSupport: false
@@ -410,7 +414,7 @@
 
       pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
-      // Interactive Frutiger Aero Bubble Physics background interaction
+      // Frutiger Aero Bubble Physics Background
       const canvas = document.getElementById('bubble-canvas');
       const ctx = canvas.getContext('2d');
       let width = canvas.width = window.innerWidth;
