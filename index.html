@@ -18,7 +18,7 @@
     body {
       margin: 0;
       padding: 0;
-      /* Background set to your skyflower.jpg image */
+      /* Background replaced with skyflower.jpg */
       background-color: #3a8ee6;
       background-image: url('skyflower.jpg');
       background-size: cover;
@@ -61,6 +61,18 @@
       z-index: 10;
       pointer-events: none;
       filter: drop-shadow(0 25px 45px rgba(0, 30, 70, 0.45));
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: center center;
+    }
+
+    /* Zoomed-in state on initial load */
+    .book-wrapper.zoomed-in {
+      transform: scale(2.2);
+      cursor: pointer;
+    }
+
+    .book-wrapper.zoomed-in #book {
+      cursor: pointer;
     }
 
     #book {
@@ -208,8 +220,8 @@
   <!-- Interactive Canvas Background -->
   <canvas id="bubble-canvas"></canvas>
 
-  <!-- Flipbook Container -->
-  <div class="book-wrapper">
+  <!-- Flipbook Container (Starts zoomed in on the title page) -->
+  <div class="book-wrapper zoomed-in" id="book-wrapper">
     <div id="book">
 
       <!-- PAGE 1: Title Page (Cover with Image Support) -->
@@ -221,7 +233,7 @@
         <p>Art 10c</p>
       </div>
 
-      <!-- PAGE 2: Table of Contents -->
+      <!-- PAGE 3: Table of Contents -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Table of Contents</div>
@@ -236,10 +248,9 @@
             </ul>
           </div>
         </div>
-        <div class="page-number">2</div>
       </div>
 
-      <!-- PAGE 3 (Spread 1 Left): About Me - pg 1 -->
+      <!-- PAGE 4 (Spread 1 Left): About Me - pg 1 -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">About Me</div>
@@ -252,7 +263,7 @@
         <div class="page-number">1</div>
       </div>
 
-      <!-- PAGE 4 (Spread 1 Right): About Me (Cont.) -->
+      <!-- PAGE 5 (Spread 1 Right): About Me (Cont.) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">About Me (Cont.)</div>
@@ -264,7 +275,7 @@
         <div class="page-number">2</div>
       </div>
 
-      <!-- PAGE 5 (Spread 2 Left): Project 1 - Uncanny Valley (Pg 2) -->
+      <!-- PAGE 6 (Spread 2 Left): Project 1 - Uncanny Valley (Pg 2) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Project 1 - Uncanny Valley</div>
@@ -278,7 +289,7 @@
         <div class="page-number">2</div>
       </div>
 
-      <!-- PAGE 6 (Spread 2 Right): Project 1 - Uncanny Valley (Pg 3) -->
+      <!-- PAGE 7 (Spread 2 Right): Project 1 - Uncanny Valley (Pg 3) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Uncanny Valley (Final)</div>
@@ -290,7 +301,7 @@
         <div class="page-number">3</div>
       </div>
 
-      <!-- PAGE 7 (Spread 3 Left): Project 2 - Quasi-object (Pg 4) -->
+      <!-- PAGE 8 (Spread 3 Left): Project 2 - Quasi-object (Pg 4) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Project 2 - Quasi-object</div>
@@ -304,7 +315,7 @@
         <div class="page-number">4</div>
       </div>
 
-      <!-- PAGE 8 (Spread 3 Right): Project 2 - Quasi-object (Pg 5) -->
+      <!-- PAGE 9 (Spread 3 Right): Project 2 - Quasi-object (Pg 5) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Quasi-object (Final)</div>
@@ -316,7 +327,7 @@
         <div class="page-number">5</div>
       </div>
 
-      <!-- PAGE 9 (Spread 4 Left): Project 3 - Time Based Video (Pg 6) -->
+      <!-- PAGE 10 (Spread 4 Left): Project 3 - Time Based Video (Pg 6) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Project 3 - Time Based Video</div>
@@ -328,7 +339,7 @@
         <div class="page-number">6</div>
       </div>
 
-      <!-- PAGE 10 (Spread 4 Right): Project 3 (Pg 7) -->
+      <!-- PAGE 11 (Spread 4 Right): Project 3 (Pg 7) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Project 3 (Cont.)</div>
@@ -339,7 +350,7 @@
         <div class="page-number">7</div>
       </div>
 
-      <!-- PAGE 11 (Spread 5 Left): Mini Projects (Pg 8) -->
+      <!-- PAGE 12 (Spread 5 Left): Mini Projects (Pg 8) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Mini Projects</div>
@@ -351,7 +362,7 @@
         <div class="page-number">8</div>
       </div>
 
-      <!-- PAGE 12 (Spread 5 Right): Mini Projects (Pg 9) -->
+      <!-- PAGE 13 (Spread 5 Right): Mini Projects (Pg 9) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Mini Projects (Cont.)</div>
@@ -362,7 +373,7 @@
         <div class="page-number">9</div>
       </div>
 
-      <!-- PAGE 13 (Spread 6 Left): How to Reach Me (Pg 10) -->
+      <!-- PAGE 14 (Spread 6 Left): How to Reach Me (Pg 10) -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">How to Reach Me</div>
@@ -376,7 +387,7 @@
         <div class="page-number">10</div>
       </div>
 
-      <!-- PAGE 14: Back Cover / Last Page -->
+      <!-- PAGE 15: Back Cover / Last Page -->
       <div class="page cover-page" data-density="hard">
         <h1>Thank You</h1>
         <p>Jazee’s Portfolio — 2026</p>
@@ -390,7 +401,10 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const pageFlip = new St.PageFlip(document.getElementById('book'), {
+      const bookWrapper = document.getElementById('book-wrapper');
+      const bookEl = document.getElementById('book');
+
+      const pageFlip = new St.PageFlip(bookEl, {
         width: 550,
         height: 733,
         size: 'stretch',
@@ -409,6 +423,75 @@
       });
 
       pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+      // Dynamically zoom into the single title page to fill the screen on load
+      let isZoomedIn = true;
+
+      function applyInitialFullScreenZoom() {
+        if (!isZoomedIn) return;
+        const rect = bookEl.getBoundingClientRect();
+        // Currently scaled by CSS default (2.2), compute exact unscaled dimensions
+        const currentScale = 2.2;
+        const baseWidth = rect.width / currentScale;
+        const baseHeight = rect.height / currentScale;
+
+        // Calculate scale so the single title page covers the full viewport
+        const scaleX = window.innerWidth / baseWidth;
+        const scaleY = window.innerHeight / baseHeight;
+        const fillScale = Math.max(scaleX, scaleY);
+
+        // Because PageFlip with showCover:true centers the closed cover inside a 2-page spread container
+        // or aligns it on the right half depending on state, check actual cover element position:
+        const coverPage = bookEl.querySelector('.page');
+        if (coverPage) {
+          const coverRect = coverPage.getBoundingClientRect();
+          const coverBaseW = coverRect.width / currentScale;
+          const coverBaseH = coverRect.height / currentScale;
+          const exactScale = Math.max(window.innerWidth / coverBaseW, window.innerHeight / coverBaseH);
+
+          // Center offset of the cover page relative to bookWrapper center
+          const wrapperRect = bookWrapper.getBoundingClientRect();
+          const wrapperCenterX = wrapperRect.left + wrapperRect.width / 2;
+          const wrapperCenterY = wrapperRect.top + wrapperRect.height / 2;
+          const coverCenterX = coverRect.left + coverRect.width / 2;
+          const coverCenterY = coverRect.top + coverRect.height / 2;
+
+          const offsetX = (wrapperCenterX - coverCenterX) / currentScale;
+          const offsetY = (wrapperCenterY - coverCenterY) / currentScale;
+
+          bookWrapper.style.transition = 'none';
+          bookWrapper.style.transform = `scale(${exactScale}) translate(${offsetX}px, ${offsetY}px)`;
+          // Force reflow then restore smooth transition
+          void bookWrapper.offsetWidth;
+          bookWrapper.style.transition = 'transform 0.9s cubic-bezier(0.22, 1, 0.36, 1)';
+        } else {
+          bookWrapper.style.transform = `scale(${fillScale})`;
+        }
+      }
+
+      // Run zoom calculation right after PageFlip finishes positioning the cover
+      requestAnimationFrame(() => {
+        setTimeout(applyInitialFullScreenZoom, 50);
+      });
+
+      window.addEventListener('resize', () => {
+        if (isZoomedIn) {
+          applyInitialFullScreenZoom();
+        }
+      });
+
+      // Intercept the first click/pointerdown on the zoomed title page to zoom out into the book view
+      function zoomOutToBook(e) {
+        if (!isZoomedIn) return;
+        e.stopPropagation();
+        e.preventDefault();
+        isZoomedIn = false;
+        bookWrapper.classList.remove('zoomed-in');
+        bookWrapper.style.transform = 'scale(1) translate(0px, 0px)';
+      }
+
+      bookEl.addEventListener('pointerdown', zoomOutToBook, true);
+      bookEl.addEventListener('click', zoomOutToBook, true);
 
       // Interactive Frutiger Aero Bubble Physics background interaction
       const canvas = document.getElementById('bubble-canvas');
