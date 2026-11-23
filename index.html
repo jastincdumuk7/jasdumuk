@@ -8,7 +8,7 @@
     @font-face {
       font-family: 'Kulachat Serif';
       src: local('Kulachat Serif SemiBold'), local('Times New Roman');
-      font-weight: 700;
+      font-weight: 600;
     }
 
     * {
@@ -26,7 +26,6 @@
       height: 100vh;
       overflow: hidden;
       font-family: 'Kulachat Serif', 'Times New Roman', serif;
-      font-weight: 700;
       position: relative;
       user-select: none;
     }
@@ -57,7 +56,7 @@
       cursor: grabbing;
     }
 
-    /* Book wrapper with realistic shadow */
+    /* Full-screen responsive wrapper with a realistic book drop shadow behind it */
     .book-wrapper {
       width: 92vw;
       height: 90vh;
@@ -66,38 +65,40 @@
       align-items: center;
       z-index: 10;
       pointer-events: none;
-      filter: drop-shadow(0 20px 40px rgba(0, 30, 80, 0.45));
+      filter: drop-shadow(0 25px 45px rgba(0, 30, 70, 0.5));
     }
 
     #book {
       pointer-events: auto;
     }
 
-    /* Page styling: #F7F7E9 background, #0100ff text, thicker font weight */
+    /* Page styling: #F7F7E9 background, #0100ff text, thicker type, and center-aligned body text */
     .page {
       background-color: #F7F7E9 !important;
       color: #0100ff !important;
-      padding: 35px 45px;
+      padding: 45px 50px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       border: 1px solid rgba(1, 0, 255, 0.08);
-      font-weight: 700;
+      font-weight: 600; /* Thicker type */
     }
 
-    /* Spine crease shadow effect for physical binding curve */
+    /* Realistic center binding shadow curvature on left and right pages */
     .page.--left {
-      box-shadow: inset -15px 0 25px -12px rgba(0, 0, 0, 0.12);
+      border-right: none;
+      box-shadow: inset -22px 0 25px -12px rgba(0, 0, 0, 0.12);
     }
 
     .page.--right {
-      box-shadow: inset 15px 0 25px -12px rgba(0, 0, 0, 0.12);
+      border-left: none;
+      box-shadow: inset 22px 0 25px -12px rgba(0, 0, 0, 0.12);
     }
 
     /* Cover / Title and Last Page Styling */
     .page.cover-page {
-      background: linear-gradient(135deg, #F7F7E9 0%, #ececd2 100%);
+      background: linear-gradient(135deg, #F7F7E9 0%, #dedec4 100%);
       justify-content: center;
       align-items: center;
       text-align: center;
@@ -108,105 +109,117 @@
       font-size: 2.8rem;
       margin-bottom: 10px;
       color: #0100ff;
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .cover-page h3 {
       font-size: 1.4rem;
+      font-weight: 600;
       margin: 5px 0;
       color: #0100ff;
-      font-weight: 700;
     }
 
     .cover-page p {
       font-size: 1.1rem;
       margin: 3px 0;
       color: #0100ff;
-      font-weight: 700;
+      font-weight: 600;
     }
 
-    /* Middle Pages Layout - Shifted body text toward middle */
+    .cover-image-placeholder {
+      width: 160px;
+      height: 90px;
+      border: 2px dashed #0100ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 15px 0;
+      font-size: 0.8rem;
+      color: #0100ff;
+      background: rgba(1, 0, 255, 0.03);
+    }
+
+    /* Middle Pages Layout */
     .page-header-title {
       text-align: center;
-      font-size: 1.25rem;
-      font-weight: 700;
+      font-size: 1.3rem;
+      font-weight: 600;
       color: #0100ff;
       margin-bottom: 10px;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
+    /* Moved body text more to the middle vertically and centered nicely */
     .page-content {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center; /* Centers body text vertically toward the middle */
-      font-size: 1rem;
-      line-height: 1.5;
+      justify-content: center;
+      font-size: 0.98rem;
+      line-height: 1.6;
       color: #0100ff;
-      font-weight: 700;
+      text-align: center;
+      overflow-y: auto;
     }
 
     .page-content p {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       color: #0100ff;
     }
 
-    /* Image placeholder: 2in x 1in placed at the top of the page */
-    .image-placeholder {
-      width: 192px;  /* ~2 inches at standard 96dpi */
-      height: 96px;  /* ~1 inch at standard 96dpi */
+    /* Image placeholder box on the top of the page: 2in x 1in proportion (~192px wide x 96px high) */
+    .image-placeholder-top {
+      width: 192px;
+      height: 96px;
       border: 2px dashed #0100ff;
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0 auto 15px auto;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: #0100ff;
       background: rgba(1, 0, 255, 0.03);
-      font-weight: 700;
     }
 
-    /* 9pt page numbers */
+    /* Page number on bottom right in 9pt */
     .page-number {
       font-size: 9pt;
       color: #0100ff;
       text-align: right;
-      font-weight: 700;
       margin-top: 5px;
-    }
-
-    .page-number.left-num {
-      text-align: left;
+      font-weight: 600;
     }
 
     .toc-list {
       list-style: none;
       padding: 0;
       margin: 0;
+      text-align: left;
     }
 
     .toc-list li {
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       font-size: 0.95rem;
       color: #0100ff;
       display: flex;
       justify-content: space-between;
-      font-weight: 700;
     }
   </style>
 </head>
 <body>
 
+  <!-- Interactive Canvas Background -->
   <canvas id="bubble-canvas"></canvas>
 
+  <!-- Flipbook Container -->
   <div class="book-wrapper">
     <div id="book">
 
-      <!-- PAGE 1: Title Page (Front Cover with Image Spot) -->
+      <!-- PAGE 1: Title Page (Cover with Image Support) -->
       <div class="page cover-page" data-density="hard">
-        <div class="image-placeholder" style="margin-bottom: 20px;">Cover Image (2" x 1")</div>
         <h1>Jazee’s Portfolio</h1>
+        <div class="cover-image-placeholder">Cover Image (2" x 1")</div>
         <h3>Jastin Dumuk</h3>
         <p>Graphic Design Student</p>
         <p>Art 10c</p>
@@ -216,7 +229,7 @@
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Table of Contents</div>
-          <div class="page-content" style="justify-content: flex-start; padding-top: 10px;">
+          <div class="page-content" style="justify-content: flex-start;">
             <ul class="toc-list">
               <li><span>1. About me</span> <span>pg 1</span></li>
               <li><span>2. Project 1 - Uncanny Valley</span> <span>pg 2-3</span></li>
@@ -227,20 +240,20 @@
             </ul>
           </div>
         </div>
-        <div class="page-number left-num">2</div>
+        <div class="page-number">2</div>
       </div>
 
       <!-- PAGE 3 (Spread 1 Left): About Me - pg 1 -->
       <div class="page" data-density="soft">
         <div>
-          <div class="image-placeholder">PNG Image (2" x 1")</div>
           <div class="page-header-title">About Me</div>
+          <div class="image-placeholder-top">Image (2" x 1")</div>
           <div class="page-content">
             <p>Hey, my name’s Jastin! I’m currently studying graphic design and broadening my experience in art and design.</p>
             <p>Design and art are crafts I’ve always been surrounded by. It has taught me to figure out the world visually and shape my perspective in what I see is important in my life.</p>
           </div>
         </div>
-        <div class="page-number left-num">1</div>
+        <div class="page-number">1</div>
       </div>
 
       <!-- PAGE 4 (Spread 1 Right): About Me (Cont.) -->
@@ -258,14 +271,15 @@
       <!-- PAGE 5 (Spread 2 Left): Project 1 - Uncanny Valley (Pg 2) -->
       <div class="page" data-density="soft">
         <div>
-          <div class="image-placeholder">PNG Image (2" x 1")</div>
           <div class="page-header-title">Project 1 - Uncanny Valley</div>
+          <div class="image-placeholder-top">Drafts (2" x 1")</div>
           <div class="page-content">
-            <p><strong>Proposal:</strong> For this first project I want to lean into the surrealism of the “uncanny valley” effect. I love the idea of having an element of the poster look unsettling, but then I thought that maybe I wanted something that looked like a vomit of colors and weirdness while still having that semi realistic vibe to it since I had more images that I could use to portray that. I want the poster to also reminisce about nostalgia and childhood.</p>
+            <p><strong>Proposal:</strong></p>
+            <p>For this first project I want to lean into the surrealism of the “uncanny valley” effect. I love the idea of having an element of the poster look unsettling, but then I thought that maybe I wanted something that looked like a vomit of colors and weirdness while still having that semi realistic vibe to it since I had more images that I could use to portray that. I want the poster to also reminisce about nostalgia and childhood.</p>
             <p><em>*Drafts (Folder: BLENDERR / dumuk)*</em></p>
           </div>
         </div>
-        <div class="page-number left-num">2</div>
+        <div class="page-number">2</div>
       </div>
 
       <!-- PAGE 6 (Spread 2 Right): Project 1 - Uncanny Valley (Pg 3) -->
@@ -283,14 +297,15 @@
       <!-- PAGE 7 (Spread 3 Left): Project 2 - Quasi-object (Pg 4) -->
       <div class="page" data-density="soft">
         <div>
-          <div class="image-placeholder">PNG Image (2" x 1")</div>
           <div class="page-header-title">Project 2 - Quasi-object</div>
+          <div class="image-placeholder-top">References (2" x 1")</div>
           <div class="page-content">
             <p><em>*References*</em></p>
-            <p><strong>Proposal:</strong> For this project I decided to get inspiration from my Pingu keychain who kind of looks like a cowboy sheriff which I thought was cool. I decided to pick this object because I love stop motion and the process behind it. The show Pingu is a stop-motion made in Switzerland and growing up I loved how the actions were shown without the use of real words.</p>
+            <p><strong>Proposal:</strong></p>
+            <p>For this project I decided to get inspiration from my Pingu keychain who kind of looks like a cowboy sheriff which I thought was cool. I decided to pick this object because I love stop motion and the process behind it. The show Pingu is a stop-motion made in Switzerland and growing up I loved how the actions were shown without the use of real words.</p>
           </div>
         </div>
-        <div class="page-number left-num">4</div>
+        <div class="page-number">4</div>
       </div>
 
       <!-- PAGE 8 (Spread 3 Right): Project 2 - Quasi-object (Pg 5) -->
@@ -308,13 +323,13 @@
       <!-- PAGE 9 (Spread 4 Left): Project 3 - Time Based Video (Pg 6) -->
       <div class="page" data-density="soft">
         <div>
-          <div class="image-placeholder">PNG Image (2" x 1")</div>
           <div class="page-header-title">Project 3 - Time Based Video</div>
+          <div class="image-placeholder-top">Media (2" x 1")</div>
           <div class="page-content">
             <p>Soon to be added</p>
           </div>
         </div>
-        <div class="page-number left-num">6</div>
+        <div class="page-number">6</div>
       </div>
 
       <!-- PAGE 10 (Spread 4 Right): Project 3 (Pg 7) -->
@@ -331,13 +346,13 @@
       <!-- PAGE 11 (Spread 5 Left): Mini Projects (Pg 8) -->
       <div class="page" data-density="soft">
         <div>
-          <div class="image-placeholder">PNG Image (2" x 1")</div>
           <div class="page-header-title">Mini Projects</div>
+          <div class="image-placeholder-top">Image (2" x 1")</div>
           <div class="page-content">
             <p>Collection of exploratory graphic design exercises and quick concept iterations.</p>
           </div>
         </div>
-        <div class="page-number left-num">8</div>
+        <div class="page-number">8</div>
       </div>
 
       <!-- PAGE 12 (Spread 5 Right): Mini Projects (Pg 9) -->
@@ -354,20 +369,19 @@
       <!-- PAGE 13 (Spread 6 Left): How to Reach Me (Pg 10) -->
       <div class="page" data-density="soft">
         <div>
-          <div class="image-placeholder">PNG Image (2" x 1")</div>
           <div class="page-header-title">How to Reach Me</div>
+          <div class="image-placeholder-top">Image (2" x 1")</div>
           <div class="page-content">
             <p>Feel free to reach out for collaborations, project inquiries, or design discussions!</p>
             <p><strong>Email:</strong> student@art10c.edu</p>
             <p><strong>Assets Directory:</strong> /BLENDERR /dumuk</p>
           </div>
         </div>
-        <div class="page-number left-num">10</div>
+        <div class="page-number">10</div>
       </div>
 
       <!-- PAGE 14: Back Cover / Last Page -->
       <div class="page cover-page" data-density="hard">
-        <div class="image-placeholder" style="margin-bottom: 20px;">Back Cover Image (2" x 1")</div>
         <h1>Thank You</h1>
         <p>Jazee’s Portfolio — 2026</p>
       </div>
@@ -375,6 +389,7 @@
     </div>
   </div>
 
+  <!-- Load Page-Flip Library -->
   <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 
   <script>
@@ -389,17 +404,17 @@
         maxHeight: 2000,
         showCover: true,
         drawShadow: true,
-        maxShadowOpacity: 0.12,  /* Soft, realistic shadow */
-        flippingTime: 850,
+        maxShadowOpacity: 0.08, /* Soft, shadowless feel while maintaining depth */
+        flippingTime: 800,
         useMouseEvents: true,     /* Drag cursor across pages to flip */
-        swipeDistance: 25,
+        swipeDistance: 30,
         showPageCorners: true,
         mobileScrollSupport: false
       });
 
       pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
-      // Bubble background physics
+      // Frutiger Aero Bubble Physics Background
       const canvas = document.getElementById('bubble-canvas');
       const ctx = canvas.getContext('2d');
       let width = canvas.width = window.innerWidth;
