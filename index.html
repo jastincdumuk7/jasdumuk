@@ -1,920 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JASTIN DUMUK // CREATIVE DEVELOPER & DESIGNER</title>
-  <meta name="description" content="Personal portfolio of Jastin Dumuk (jasdumuk) - Creative Developer, Designer, and Builder with a bold, interactive digital presence." />
-  
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0a0a'/><text y='70' x='50' font-size='65' text-anchor='middle' fill='%2300f2c3' font-family='sans-serif' font-weight='900'>J</text></svg>" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jazee’s Portfolio - Frutiger Aero Edition</title>
+  <style>
+    @font-face {
+      font-family: 'Kulachat Serif';
+      src: local('Kulachat Serif SemiBold'), local('Times New Roman');
+      font-weight: 600;
+    }
 
-  <!-- Google Fonts: Jost (Digital counterpart of Futura by Paul Renner) in all weights 100-900 with italics -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    * {
+      box-sizing: border-box;
+    }
 
-  <link rel="stylesheet" href="style.css" />
+    body {
+      margin: 0;
+      padding: 0;
+      /* Background set to your skyflower.jpg image */
+      background-color: #3a8ee6;
+      background-image: url('skyflower.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Kulachat Serif', 'Times New Roman', serif;
+      position: relative;
+      user-select: none;
+    }
+
+    /* Interactive Bubble Canvas Layer */
+    #bubble-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      cursor: grab;
+    }
+
+    #bubble-canvas:active {
+      cursor: grabbing;
+    }
+
+    /* Full-screen responsive wrapper with a realistic book drop shadow behind it */
+    .book-wrapper {
+      width: 92vw;
+      height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      pointer-events: none;
+      filter: drop-shadow(0 25px 45px rgba(0, 30, 70, 0.45));
+    }
+
+    #book {
+      pointer-events: auto;
+    }
+
+    /* Page styling: #F7F7E9 background, #0100ff text, thicker type, center-aligned body text */
+    .page {
+      background-color: #F7F7E9 !important;
+      color: #0100ff !important;
+      padding: 45px 50px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(1, 0, 255, 0.08);
+      font-weight: 600;
+    }
+
+    /* Realistic center binding shadow curvature on left and right pages */
+    .page.--left {
+      border-right: none;
+      box-shadow: inset -22px 0 25px -12px rgba(0, 0, 0, 0.12);
+    }
+
+    .page.--right {
+      border-left: none;
+      box-shadow: inset 22px 0 25px -12px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Cover / Title and Last Page Styling */
+    .page.cover-page {
+      background: linear-gradient(135deg, #F7F7E9 0%, #dedec4 100%);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border: 3px double #0100ff;
+    }
+
+    .cover-page h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      color: #0100ff;
+      font-weight: 600;
+    }
+
+    .cover-page h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 5px 0;
+      color: #0100ff;
+    }
+
+    .cover-page p {
+      font-size: 1.1rem;
+      margin: 3px 0;
+      color: #0100ff;
+      font-weight: 600;
+    }
+
+    /* Cover image placeholder (2" x 1" proportion) */
+    .cover-image-placeholder {
+      width: 192px;
+      height: 96px;
+      border: 2px dashed #0100ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 15px auto;
+      font-size: 0.8rem;
+      color: #0100ff;
+      background: rgba(1, 0, 255, 0.03);
+    }
+
+    /* Middle Pages Layout */
+    .page-header-title {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #0100ff;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Body text centered vertically and horizontally */
+    .page-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      color: #0100ff;
+      text-align: center;
+      overflow-y: auto;
+    }
+
+    .page-content p {
+      margin-bottom: 12px;
+      color: #0100ff;
+    }
+
+    /* Image placeholder box on the top of the page: 2in x 1in proportion (192px x 96px) */
+    .image-placeholder-top {
+      width: 192px;
+      height: 96px;
+      border: 2px dashed #0100ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 15px auto;
+      font-size: 0.8rem;
+      color: #0100ff;
+      background: rgba(1, 0, 255, 0.03);
+    }
+
+    /* Page number on bottom right in 9pt */
+    .page-number {
+      font-size: 9pt;
+      color: #0100ff;
+      text-align: right;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    }
+
+    .toc-list li {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #0100ff;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
 </head>
 <body>
-  <!-- Reading Progress Bar -->
-  <div class="scroll-progress-container" aria-hidden="true">
-    <div class="scroll-progress-bar" id="progressBar"></div>
-  </div>
 
-  <!-- Announcement Ticker -->
-  <aside class="top-announcement" aria-label="Status banner">
-    <div class="announcement-content">
-      <span class="status-pulse-dot"></span>
-      <span class="announcement-text">STATUS: AVAILABLE FOR FREELANCE & PRODUCT COLLABORATIONS &bull; 2026 EDITION</span>
-      <span class="announcement-badge">V2.4 LIVE</span>
-    </div>
-  </aside>
+  <!-- Interactive Canvas Background -->
+  <canvas id="bubble-canvas"></canvas>
 
-  <!-- Floating Sticky Navigation -->
-  <header class="site-header" id="header">
-    <nav class="nav-container" aria-label="Main Navigation">
-      <a href="#hero" class="nav-brand">
-        <span class="brand-monogram">JD</span>
-        <span class="brand-name">JAS.DUMUK</span>
-      </a>
+  <!-- Flipbook Container -->
+  <div class="book-wrapper">
+    <div id="book">
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#projects" class="nav-link">PROJECTS</a></li>
-        <li><a href="#duck-lab" class="nav-link special-duck-link">THE DUCK LAB <span class="nav-sparkle">✦</span></a></li>
-        <li><a href="#skills" class="nav-link">SKILLS</a></li>
-        <li><a href="#about" class="nav-link">ABOUT</a></li>
-        <li><a href="#contact" class="nav-link nav-cta">LET'S TALK</a></li>
-      </ul>
-
-      <!-- Theme / Sound / Mobile Controls -->
-      <div class="nav-controls">
-        <button class="sound-toggle-btn" id="quackAudioBtn" title="Play mascot quack sound" aria-label="Play quack sound">
-          <span class="sound-icon">🔊</span>
-          <span class="sound-text">SFX</span>
-        </button>
-        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </button>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <!-- HERO SECTION -->
-    <section class="hero-section" id="hero">
-      <div class="hero-grid-bg" aria-hidden="true"></div>
-
-      <div class="container hero-container">
-        <!-- Badge row -->
-        <div class="hero-badges">
-          <span class="badge badge-green">
-            <span class="live-dot"></span>
-            OPEN TO OPPORTUNITIES
-          </span>
-          <span class="badge badge-white">PORTFOLIO '26</span>
-          <span class="badge badge-teal">SYSTEM: ACTIVE</span>
-        </div>
-
-        <!-- Dramatic Futura Typography Header -->
-        <div class="hero-headline-wrap">
-          <h1 class="hero-title">
-            <span class="hero-line hero-line-light">HELLO, WORLD. I AM</span>
-            <span class="hero-line hero-line-ultra">JASTIN DUMUK</span>
-            <span class="hero-line hero-line-stroke" data-text="CREATIVE DEVELOPER">CREATIVE DEVELOPER</span>
-            <span class="hero-line hero-line-italic">&amp; DIGITAL CRAFTSMAN.</span>
-          </h1>
-        </div>
-
-        <p class="hero-subtext">
-          Bridging high-voltage aesthetics and robust software engineering. Crafting bold, punchy, and delightful digital experiences where code meets fearless design.
-        </p>
-
-        <!-- CTA Buttons -->
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">
-            <span>EXPLORE WORK</span>
-            <span class="btn-arrow">↓</span>
-          </a>
-          <a href="#contact" class="btn btn-secondary">
-            <span>GET IN TOUCH</span>
-            <span class="btn-arrow">→</span>
-          </a>
-          <button class="btn btn-accent copy-email-btn" id="heroCopyBtn" data-email="jasdumuk@gmail.com">
-            <span class="btn-icon">📋</span>
-            <span class="btn-label">COPY EMAIL</span>
-          </button>
-        </div>
-
-        <!-- Quick Metric Strip -->
-        <div class="hero-stats-row">
-          <div class="stat-card">
-            <div class="stat-number">100%</div>
-            <div class="stat-label">PASSION &amp; ATTENTION TO DETAIL</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">&lt;FAST/&gt;</div>
-            <div class="stat-label">INTERACTIVE WEB EXPERIENCES</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1 DUCK</div>
-            <div class="stat-label">CHIEF CODE REVIEWER ON DUTY</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- INFINITE MARQUEE TICKER 1 -->
-    <div class="marquee-wrapper" aria-hidden="true">
-      <div class="marquee-track marquee-forward">
-        <div class="marquee-content">
-          <span>CREATIVE CODING</span>
-          <span class="marquee-star">✦</span>
-          <span>FUTURA TYPOGRAPHY</span>
-          <span class="marquee-star">★</span>
-          <span>HIGH VOLTAGE TEAL</span>
-          <span class="marquee-star">✦</span>
-          <span>BOLD INTERACTIONS</span>
-          <span class="marquee-star">★</span>
-          <span>ACCESSIBLE &amp; FAST</span>
-          <span class="marquee-star">✦</span>
-          <span>FULLSTACK THINKING</span>
-          <span class="marquee-star">★</span>
-        </div>
-        <div class="marquee-content">
-          <span>CREATIVE CODING</span>
-          <span class="marquee-star">✦</span>
-          <span>FUTURA TYPOGRAPHY</span>
-          <span class="marquee-star">★</span>
-          <span>HIGH VOLTAGE TEAL</span>
-          <span class="marquee-star">✦</span>
-          <span>BOLD INTERACTIONS</span>
-          <span class="marquee-star">★</span>
-          <span>ACCESSIBLE &amp; FAST</span>
-          <span class="marquee-star">✦</span>
-          <span>FULLSTACK THINKING</span>
-          <span class="marquee-star">★</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- FEATURED PROJECTS SECTION -->
-    <section class="section projects-section" id="projects">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag-group">
-            <span class="tag-pill tag-teal">PORTFOLIO ARCHIVE</span>
-            <span class="section-num">01 // SELECTED WORKS</span>
-          </div>
-          <h2 class="section-title">
-            <span class="title-bold">FEATURED</span>
-            <span class="title-stroke">CREATIONS</span>
-          </h2>
-          <p class="section-description">
-            A curated index of interactive prototypes, front-end experiments, and full-stack solutions. Every card is clickable for extended details.
-          </p>
-        </div>
-
-        <!-- Filter Controls -->
-        <div class="project-filters" role="tablist" aria-label="Project filter">
-          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
-            ALL WORKS <span class="filter-count">(4)</span>
-          </button>
-          <button class="filter-btn" data-filter="web" role="tab" aria-selected="false">
-            WEB APPS <span class="filter-count">(2)</span>
-          </button>
-          <button class="filter-btn" data-filter="interactive" role="tab" aria-selected="false">
-            INTERACTIVE <span class="filter-count">(1)</span>
-          </button>
-          <button class="filter-btn" data-filter="creative" role="tab" aria-selected="false">
-            CREATIVE LAB <span class="filter-count">(1)</span>
-          </button>
-        </div>
-
-        <!-- Projects Grid -->
-        <div class="projects-grid" id="projectsGrid">
-          
-          <!-- Project 1 -->
-          <article class="project-card" data-category="web interactive" tabindex="0">
-            <div class="project-card-header">
-              <span class="project-index">PROJECT / 01</span>
-              <span class="project-badge">FEATURED</span>
-            </div>
-            <div class="project-visual project-visual-teal">
-              <div class="visual-grid-deco"></div>
-              <div class="visual-icon-display">
-                <span class="visual-emoji">⚡️</span>
-                <span class="visual-accent-code">&lt;NEO-BRUTAL/&gt;</span>
-              </div>
-            </div>
-            <div class="project-card-body">
-              <div class="project-tags">
-                <span class="tech-tag">HTML5 / CSS3</span>
-                <span class="tech-tag">VANILLA JS</span>
-                <span class="tech-tag">FUTURA SPEC</span>
-              </div>
-              <h3 class="project-name">Jasdumuk Interactive Digital HQ</h3>
-              <p class="project-desc">
-                High-contrast neo-editorial portfolio built with custom CSS architecture, responsive layout grids, and tactile micro-interactions.
-              </p>
-              <div class="project-card-footer">
-                <button class="card-btn open-modal-btn" data-project="0">
-                  <span>EXPAND SPECS</span>
-                  <span class="arrow">↗</span>
-                </button>
-                <a href="https://github.com/jastincdumuk7/jasdumuk" target="_blank" rel="noopener noreferrer" class="card-link" aria-label="View source on GitHub">
-                  <span>GITHUB</span>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Project 2 -->
-          <article class="project-card" data-category="interactive creative" tabindex="0">
-            <div class="project-card-header">
-              <span class="project-index">PROJECT / 02</span>
-              <span class="project-badge project-badge-green">EASTER EGG</span>
-            </div>
-            <div class="project-visual project-visual-green">
-              <div class="visual-grid-deco"></div>
-              <div class="visual-icon-display">
-                <span class="visual-emoji">🦆</span>
-                <span class="visual-accent-code">ERM_DUCK.EXE</span>
-              </div>
-            </div>
-            <div class="project-card-body">
-              <div class="project-tags">
-                <span class="tech-tag">WEB AUDIO API</span>
-                <span class="tech-tag">INTERACTIVE MASCOT</span>
-                <span class="tech-tag">CSS SPRITES</span>
-              </div>
-              <h3 class="project-name">The Duck Companion Engine</h3>
-              <p class="project-desc">
-                A reactive companion mini-engine featuring speech bubble synthesizers, quack sound frequency generation, and physics bouncing states.
-              </p>
-              <div class="project-card-footer">
-                <button class="card-btn open-modal-btn" data-project="1">
-                  <span>EXPAND SPECS</span>
-                  <span class="arrow">↗</span>
-                </button>
-                <a href="#duck-lab" class="card-link">
-                  <span>TEST LIVE</span>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Project 3 -->
-          <article class="project-card" data-category="web" tabindex="0">
-            <div class="project-card-header">
-              <span class="project-index">PROJECT / 03</span>
-              <span class="project-badge">SYSTEMS</span>
-            </div>
-            <div class="project-visual project-visual-white">
-              <div class="visual-grid-deco"></div>
-              <div class="visual-icon-display">
-                <span class="visual-emoji">📐</span>
-                <span class="visual-accent-code">FUTURA_TYPESCALE</span>
-              </div>
-            </div>
-            <div class="project-card-body">
-              <div class="project-tags">
-                <span class="tech-tag">DESIGN SYSTEM</span>
-                <span class="tech-tag">VARIABLE FONTS</span>
-                <span class="tech-tag">CSS TOKENS</span>
-              </div>
-              <h3 class="project-name">Typographic Matrix &amp; Token Architecture</h3>
-              <p class="project-desc">
-                A modular typography and color tokens harness built around geometric sans-serif principles, fluid clamp calculation, and high-DPI crispness.
-              </p>
-              <div class="project-card-footer">
-                <button class="card-btn open-modal-btn" data-project="2">
-                  <span>EXPAND SPECS</span>
-                  <span class="arrow">↗</span>
-                </button>
-                <a href="#skills" class="card-link">
-                  <span>VIEW SYSTEM</span>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Project 4 -->
-          <article class="project-card" data-category="creative" tabindex="0">
-            <div class="project-card-header">
-              <span class="project-index">PROJECT / 04</span>
-              <span class="project-badge project-badge-teal">EXPERIMENT</span>
-            </div>
-            <div class="project-visual project-visual-dark">
-              <div class="visual-grid-deco"></div>
-              <div class="visual-icon-display">
-                <span class="visual-emoji">🔮</span>
-                <span class="visual-accent-code">CANVAS_PARTICLES</span>
-              </div>
-            </div>
-            <div class="project-card-body">
-              <div class="project-tags">
-                <span class="tech-tag">CREATIVE JS</span>
-                <span class="tech-tag">HIGH CONTRAST</span>
-                <span class="tech-tag">A11Y FIRST</span>
-              </div>
-              <h3 class="project-name">Algorithmic Canvas Playground</h3>
-              <p class="project-desc">
-                Generative geometry animations powered by mathematical easing curves, neon teal vectors, and responsive mouse trail physics.
-              </p>
-              <div class="project-card-footer">
-                <button class="card-btn open-modal-btn" data-project="3">
-                  <span>EXPAND SPECS</span>
-                  <span class="arrow">↗</span>
-                </button>
-                <a href="#contact" class="card-link">
-                  <span>INQUIRE</span>
-                </a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- THE DUCK LAB: INTERACTIVE MASCOT SECTION -->
-    <section class="section duck-lab-section" id="duck-lab">
-      <div class="container">
-        <div class="duck-lab-card">
-          <div class="duck-lab-header">
-            <div class="duck-lab-badge">
-              <span class="mascot-star">★</span>
-              <span>SPECIAL FEATURE: THE RESIDENT LAB MASCOT</span>
-            </div>
-            <span class="duck-lab-status">ACTIVE &bull; MONITORING RUNTIME</span>
-          </div>
-
-          <div class="duck-lab-grid">
-            <!-- Duck Visual Stage -->
-            <div class="duck-stage">
-              <div class="duck-platform">
-                <div class="duck-shadow"></div>
-                <!-- Image with fallback -->
-                <div class="duck-image-wrapper" id="duckImgWrap">
-                  <img 
-                    src="images/erm duck.png" 
-                    alt="Erm Duck Mascot - Chief of Code Review" 
-                    class="duck-mascot-img" 
-                    id="duckMascot"
-                    onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 160 160\'><rect width=\'160\' height=\'160\' rx=\'20\' fill=\'%2300f2c3\'/><circle cx=\'80\' cy=\'80\' r=\'50\' fill=\'%23ffea00\'/><circle cx=\'65\' cy=\'70\' r=\'8\' fill=\'%230a0a0a\'/><circle cx=\'95\' cy=\'70\' r=\'8\' fill=\'%230a0a0a\'/><path d=\'M60 95 Q80 120 100 95 Z\' fill=\'%23ff6d00\'/><text x=\'80\' y=\'145\' font-size=\'14\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%230a0a0a\'>ERM DUCK</text></svg>';"
-                  />
-                  <!-- Floating Speech Bubble -->
-                  <div class="duck-speech-bubble" id="duckSpeech" role="status" aria-live="polite">
-                    "erm... did someone say high-contrast teal and Futura?"
-                  </div>
-                </div>
-              </div>
-
-              <!-- Interactive Controls for Duck -->
-              <div class="duck-interactive-bar">
-                <button class="duck-action-btn" id="quackBtn">
-                  <span class="action-emoji">🔊</span>
-                  <span class="action-text">QUACK (SFX)</span>
-                </button>
-                <button class="duck-action-btn" id="thinkBtn">
-                  <span class="action-emoji">💭</span>
-                  <span class="action-text">RANDOM WISDOM</span>
-                </button>
-                <button class="duck-action-btn" id="danceBtn">
-                  <span class="action-emoji">💃</span>
-                  <span class="action-text">PARTY BOUNCE</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Duck Lab Content / Stats -->
-            <div class="duck-info-panel">
-              <span class="lab-tag">INSPECTOR UNIT #007</span>
-              <h3 class="duck-title">MEET ERM DUCK</h3>
-              <p class="duck-intro">
-                Legend has it that no commit lands on <code>jastincdumuk7/jasdumuk</code> without the stern, observant eye of Erm Duck. Trained on rigorous visual inspection, pixel alignment, and Futura letter-spacing audits.
-              </p>
-
-              <div class="duck-metrics">
-                <div class="metric-pill">
-                  <span class="metric-key">CODE REVIEW RATING:</span>
-                  <span class="metric-val">10/10 QUACKS</span>
-                </div>
-                <div class="metric-pill">
-                  <span class="metric-key">FAVORITE FONT:</span>
-                  <span class="metric-val">FUTURA BOLD OBLIQUE</span>
-                </div>
-                <div class="metric-pill">
-                  <span class="metric-key">BUG HUNT SUCCESS:</span>
-                  <span class="metric-val">99.98% ELIMINATED</span>
-                </div>
-                <div class="metric-pill">
-                  <span class="metric-key">TOTAL QUACKS LOGGED:</span>
-                  <span class="metric-val" id="quackCounterDisplay">0</span>
-                </div>
-              </div>
-
-              <div class="duck-terminal-box">
-                <div class="terminal-bar">
-                  <span class="terminal-dot red"></span>
-                  <span class="terminal-dot yellow"></span>
-                  <span class="terminal-dot green"></span>
-                  <span class="terminal-title">erm-duck-debugger.sh</span>
-                </div>
-                <pre class="terminal-body" id="duckTerminalLog">
-$ jasdumuk --inspect-quality
-[OK] Palette verified: Light Teal #B2F5EA + Obsidian Black #0A0A0A
-[OK] Accent layers: Electric Green #00E676 + Snow White #FFFFFF
-[OK] Futura typography system: All weights loaded &amp; calibrated
-Ready for interaction.</pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- INFINITE MARQUEE TICKER 2 (REVERSE) -->
-    <div class="marquee-wrapper marquee-secondary" aria-hidden="true">
-      <div class="marquee-track marquee-reverse">
-        <div class="marquee-content">
-          <span>RESPONSIVE ARCHITECTURE</span>
-          <span class="marquee-star">✦</span>
-          <span>GEOMETRIC PRECISION</span>
-          <span class="marquee-star">★</span>
-          <span>PIXEL PERFECTION</span>
-          <span class="marquee-star">✦</span>
-          <span>CREATIVE DIRECTION</span>
-          <span class="marquee-star">★</span>
-          <span>BOLD IDENTITY</span>
-          <span class="marquee-star">✦</span>
-          <span>ZERO CLUTTER</span>
-          <span class="marquee-star">★</span>
-        </div>
-        <div class="marquee-content">
-          <span>RESPONSIVE ARCHITECTURE</span>
-          <span class="marquee-star">✦</span>
-          <span>GEOMETRIC PRECISION</span>
-          <span class="marquee-star">★</span>
-          <span>PIXEL PERFECTION</span>
-          <span class="marquee-star">✦</span>
-          <span>CREATIVE DIRECTION</span>
-          <span class="marquee-star">★</span>
-          <span>BOLD IDENTITY</span>
-          <span class="marquee-star">✦</span>
-          <span>ZERO CLUTTER</span>
-          <span class="marquee-star">★</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- SKILLS & CAPABILITIES SECTION -->
-    <section class="section skills-section" id="skills">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag-group">
-            <span class="tag-pill tag-green">CAPABILITY MATRIX</span>
-            <span class="section-num">02 // ARSENAL</span>
-          </div>
-          <h2 class="section-title">
-            <span class="title-bold">TECHNICAL &amp;</span>
-            <span class="title-stroke">CREATIVE STACK</span>
-          </h2>
-          <p class="section-description">
-            Versatile toolset spanning modern front-end craftsmanship, visual design systems, and rapid prototyping.
-          </p>
-        </div>
-
-        <div class="skills-matrix-grid">
-          
-          <!-- Skill Category 1 -->
-          <div class="skill-category-card">
-            <div class="skill-cat-header">
-              <span class="cat-icon">⚡️</span>
-              <h3 class="cat-title">FRONT-END ENGINEERING</h3>
-            </div>
-            <ul class="skills-list">
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">Semantic HTML5 &amp; Modern Web APIs</span>
-                  <span class="skill-score">ADVANCED</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 95%;"></div>
-                </div>
-              </li>
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">CSS3, Flexbox, Grid, Fluid Tokens</span>
-                  <span class="skill-score">EXPERT</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 98%;"></div>
-                </div>
-              </li>
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">Modern JavaScript (ES6+ / Modular)</span>
-                  <span class="skill-score">PROFICIENT</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 90%;"></div>
-                </div>
-              </li>
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">Responsive Design &amp; Cross-Browser</span>
-                  <span class="skill-score">EXPERT</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 96%;"></div>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Skill Category 2 -->
-          <div class="skill-category-card">
-            <div class="skill-cat-header">
-              <span class="cat-icon">🎨</span>
-              <h3 class="cat-title">DESIGN &amp; TYPOGRAPHY</h3>
-            </div>
-            <ul class="skills-list">
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">Geometric &amp; Neo-Brutalist Layouts</span>
-                  <span class="skill-score">SIGNATURE</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 96%;"></div>
-                </div>
-              </li>
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">Futura &amp; Jost Typographic Hierarchy</span>
-                  <span class="skill-score">SPECIALIST</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 98%;"></div>
-                </div>
-              </li>
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">High-Contrast Color Grading</span>
-                  <span class="skill-score">EXPERT</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 92%;"></div>
-                </div>
-              </li>
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">UI / UX Micro-Interactions &amp; Physics</span>
-                  <span class="skill-score">PROFICIENT</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 88%;"></div>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Skill Category 3 -->
-          <div class="skill-category-card">
-            <div class="skill-cat-header">
-              <span class="cat-icon">🛠</span>
-              <h3 class="cat-title">WORKFLOW &amp; DEPLOYMENT</h3>
-            </div>
-            <ul class="skills-list">
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">Git Version Control &amp; GitHub Actions</span>
-                  <span class="skill-score">SOLID</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 90%;"></div>
-                </div>
-              </li>
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">GitHub Pages CI/CD &amp; Static Hosting</span>
-                  <span class="skill-score">EXPERT</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 95%;"></div>
-                </div>
-              </li>
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">Web Performance &amp; Core Web Vitals</span>
-                  <span class="skill-score">HIGH</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 92%;"></div>
-                </div>
-              </li>
-              <li class="skill-item">
-                <div class="skill-info">
-                  <span class="skill-name">Accessibility (a11y) &amp; Keyboard Nav</span>
-                  <span class="skill-score">COMPLIANT</span>
-                </div>
-                <div class="skill-bar-wrap">
-                  <div class="skill-bar-fill" style="width: 94%;"></div>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-        <!-- Interactive Tag Cloud -->
-        <div class="tech-cloud-container">
-          <span class="tech-cloud-title">KEYWORD MATRIX:</span>
-          <div class="tech-badges-cluster">
-            <span class="cluster-badge">FUTURA BOLD</span>
-            <span class="cluster-badge">LIGHT TEAL #B2F5EA</span>
-            <span class="cluster-badge">OBSIDIAN BLACK</span>
-            <span class="cluster-badge">NEON GREEN</span>
-            <span class="cluster-badge">PURE WHITE</span>
-            <span class="cluster-badge">HIGH CONTRAST</span>
-            <span class="cluster-badge">TACTILE SHADOWS</span>
-            <span class="cluster-badge">CSS GRID</span>
-            <span class="cluster-badge">RESPONSIVE</span>
-            <span class="cluster-badge">ZERO RUNTIME BLOAT</span>
-            <span class="cluster-badge">ERM DUCK CERTIFIED</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT SECTION -->
-    <section class="section about-section" id="about">
-      <div class="container">
-        <div class="about-grid">
-          
-          <div class="about-visual-col">
-            <div class="about-portrait-card">
-              <div class="card-inner-frame">
-                <div class="portrait-header">
-                  <span class="p-dot"></span>
-                  <span class="p-title">JASTIN_DUMUK_BIO.MD</span>
-                </div>
-                <div class="portrait-graphic">
-                  <div class="graphic-monogram">JD</div>
-                  <div class="graphic-sub">INNOVATOR &bull; BUILDER</div>
-                </div>
-                <div class="portrait-details">
-                  <div class="p-row">
-                    <span class="p-label">LOCATION:</span>
-                    <span class="p-val">PACIFIC / REMOTE</span>
-                  </div>
-                  <div class="p-row">
-                    <span class="p-label">HANDLE:</span>
-                    <span class="p-val">@jasdumuk / @jastincdumuk7</span>
-                  </div>
-                  <div class="p-row">
-                    <span class="p-label">FOCUS:</span>
-                    <span class="p-val">FRONTEND, UI, CREATIVE CODE</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Mini Quote Box -->
-            <div class="quote-box">
-              <p class="quote-text">
-                "Design isn't just how it looks. It's how boldly it communicates, responds, and feels in the hands of the user."
-              </p>
-              <span class="quote-author">— JASTIN DUMUK</span>
-            </div>
-          </div>
-
-          <div class="about-content-col">
-            <div class="section-tag-group">
-              <span class="tag-pill tag-white">BACKGROUND</span>
-              <span class="section-num">03 // PHILOSOPHY</span>
-            </div>
-            
-            <h2 class="section-title">
-              <span class="title-bold">TURNING VISION</span>
-              <span class="title-italic">INTO INTERACTIVE REALITY.</span>
-            </h2>
-
-            <div class="bio-paragraphs">
-              <p class="lead-bio">
-                I am a developer and designer obsessed with craft, typography, and vibrant visual identities. I believe digital spaces shouldn't feel muted or timid—they should command attention with punchy palettes, crisp geometry, and tactile responsiveness.
-              </p>
-              <p>
-                My work centers around modern web standards, lightweight zero-dependency architecture, and striking typography centered on Paul Renner's timeless geometric masterwork, <strong>Futura</strong>.
-              </p>
-              <p>
-                Whether building bespoke web interfaces, engineering interactive components, or pairing with my trusty duck code companion, I bring relentless energy, playful ingenuity, and clean code to every project.
-              </p>
-            </div>
-
-            <!-- Milestone Timeline -->
-            <div class="milestone-timeline">
-              <div class="milestone-item">
-                <div class="m-marker"></div>
-                <div class="m-content">
-                  <span class="m-year">2026</span>
-                  <h4 class="m-title">GitHub Pages Evolution</h4>
-                  <p class="m-desc">Launched the high-contrast bright teal &amp; black interactive portfolio ecosystem.</p>
-                </div>
-              </div>
-              <div class="milestone-item">
-                <div class="m-marker"></div>
-                <div class="m-content">
-                  <span class="m-year">2025</span>
-                  <h4 class="m-title">Creative Coding &amp; Interaction Systems</h4>
-                  <p class="m-desc">Deep-dived into neo-brutalist interaction paradigms, fluid typography, and accessible UI engineering.</p>
-                </div>
-              </div>
-              <div class="milestone-item">
-                <div class="m-marker"></div>
-                <div class="m-content">
-                  <span class="m-year">GENESIS</span>
-                  <h4 class="m-title">The First Line of Code</h4>
-                  <p class="m-desc">Began the journey of writing software and exploring the intersection of design and technology.</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section class="section contact-section" id="contact">
-      <div class="container">
-        <div class="contact-card">
-          <div class="contact-card-inner">
-            
-            <div class="contact-header">
-              <div class="section-tag-group">
-                <span class="tag-pill tag-teal">CONNECT</span>
-                <span class="section-num">04 // REACH OUT</span>
-              </div>
-              <h2 class="contact-big-title">
-                <span>LET'S CREATE</span>
-                <span class="title-stroke">SOMETHING</span>
-                <span class="highlight-green">UNFORGETTABLE.</span>
-              </h2>
-              <p class="contact-sub">
-                Have a project idea, inquiry, or just want to discuss typography, web design, or quacking ducks? My inbox is always open.
-              </p>
-            </div>
-
-            <!-- Interactive Action Box -->
-            <div class="contact-interactive-deck">
-              <!-- Email Copy Action -->
-              <div class="direct-email-box">
-                <span class="deck-label">DIRECT EMAIL INQUIRIES:</span>
-                <div class="email-clip-wrapper">
-                  <span class="email-address-text" id="targetEmail">jasdumuk@gmail.com</span>
-                  <button class="btn btn-primary copy-email-btn" id="contactCopyBtn" data-email="jasdumuk@gmail.com">
-                    <span class="btn-text">COPY EMAIL</span>
-                    <span class="btn-icon">📋</span>
-                  </button>
-                  <a href="mailto:jasdumuk@gmail.com" class="btn btn-secondary" title="Open mail client">
-                    <span>MAIL CLIENT ↗</span>
-                  </a>
-                </div>
-              </div>
-
-              <!-- Social Connectivity Badges -->
-              <div class="social-channels-box">
-                <span class="deck-label">SOCIAL NETWORK &amp; CODE PLATFORMS:</span>
-                <div class="social-badges-grid">
-                  <a href="https://github.com/jastincdumuk7" target="_blank" rel="noopener noreferrer" class="social-badge">
-                    <span class="social-icon">🐙</span>
-                    <div class="social-info">
-                      <span class="s-name">GITHUB</span>
-                      <span class="s-handle">@jastincdumuk7</span>
-                    </div>
-                    <span class="s-arrow">↗</span>
-                  </a>
-                  
-                  <a href="https://github.com/jastincdumuk7/jasdumuk" target="_blank" rel="noopener noreferrer" class="social-badge">
-                    <span class="social-icon">⭐️</span>
-                    <div class="social-info">
-                      <span class="s-name">REPOSITORY</span>
-                      <span class="s-handle">jasdumuk</span>
-                    </div>
-                    <span class="s-arrow">↗</span>
-                  </a>
-
-                  <a href="mailto:jasdumuk@gmail.com" class="social-badge">
-                    <span class="social-icon">📬</span>
-                    <div class="social-info">
-                      <span class="s-name">EMAIL</span>
-                      <span class="s-handle">Direct Contact</span>
-                    </div>
-                    <span class="s-arrow">↗</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Interactive Quick Message Ping -->
-            <div class="quick-ping-box">
-              <h4 class="ping-title">QUICK MESSAGE DISPATCHER:</h4>
-              <form class="ping-form" id="pingForm" onsubmit="event.preventDefault(); window.handleQuickPing();">
-                <div class="input-group">
-                  <label for="pingName" class="sr-only">Your Name</label>
-                  <input type="text" id="pingName" class="ping-input" placeholder="YOUR NAME" required />
-                </div>
-                <div class="input-group">
-                  <label for="pingMessage" class="sr-only">Your Message</label>
-                  <input type="text" id="pingMessage" class="ping-input" placeholder="WHAT ARE WE BUILDING TOGETHER?" required />
-                </div>
-                <button type="submit" class="btn btn-primary ping-submit-btn">
-                  <span>DISPATCH PING</span>
-                  <span class="arrow">⚡️</span>
-                </button>
-              </form>
-              <div class="ping-feedback" id="pingFeedback" role="status" aria-live="polite"></div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- SITE FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <span class="f-monogram">JD</span>
-          <span class="f-title">JASTIN DUMUK</span>
-          <span class="f-desc">CRAFTED WITH BOLD FUTURA &amp; HIGH-VOLTAGE LIGHT TEAL</span>
-        </div>
-        <div class="footer-back-to-top">
-          <a href="#hero" class="back-to-top-btn" aria-label="Back to top of page">
-            <span>BACK TO TOP</span>
-            <span class="top-arrow">↑</span>
-          </a>
-        </div>
+      <!-- PAGE 1: Title Page (Cover with Image Support) -->
+      <div class="page cover-page" data-density="hard">
+        <h1>Jazee’s Portfolio</h1>
+        <div class="cover-image-placeholder">Cover Image (2" x 1")</div>
+        <h3>Jastin Dumuk</h3>
+        <p>Graphic Design Student</p>
+        <p>Art 10c</p>
       </div>
 
-      <div class="footer-divider"></div>
-
-      <div class="footer-bottom">
-        <p class="footer-copy">
-          &copy; 2026 JASTIN DUMUK. ALL RIGHTS RESERVED. HOSTED ON GITHUB PAGES.
-        </p>
-        <div class="footer-meta">
-          <span class="meta-item">STATUS: 100% OPERATIONAL</span>
-          <span class="meta-dot">&bull;</span>
-          <span class="meta-item">BUILT WITH VANILLA WEB STANDARDS</span>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- PROJECT DETAIL MODAL DIALOG -->
-  <div class="modal-backdrop" id="projectModal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-window">
-      <div class="modal-header">
-        <div class="modal-title-wrap">
-          <span class="modal-category" id="modalCategory">CASE STUDY</span>
-          <h3 class="modal-title" id="modalTitle">Project Title</h3>
-        </div>
-        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">✕</button>
-      </div>
-      
-      <div class="modal-body">
-        <div class="modal-tags" id="modalTags"></div>
-        <p class="modal-full-desc" id="modalDesc"></p>
-        <div class="modal-specs-block">
-          <h4 class="specs-title">TECHNICAL HIGHLIGHTS:</h4>
-          <ul class="specs-list" id="modalSpecs"></ul>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <a href="https://github.com/jastincdumuk7/jasdumuk" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="modalLink">
-          <span>VIEW CODEBASE</span>
-          <span>↗</span>
-        </a>
-        <button class="btn btn-secondary" id="modalDismissBtn">CLOSE WINDOW</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- FLOATING TOAST NOTIFICATION -->
-  <div class="toast-notification" id="toastNotification" role="alert" aria-live="assertive">
-    <span class="toast-icon">✨</span>
-    <span class="toast-message" id="toastMessage">EMAIL COPIED TO CLIPBOARD!</span>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+      <!-- PAGE 2: Table of Contents -->
+      <div class="page" data-density
