@@ -20,7 +20,7 @@
       padding: 0;
       /* Background replaced with skyflower.jpg */
       background-color: #3a8ee6;
-      background-image: url('skyflower.jpg');
+      background-image: url('images/skyflower.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -206,12 +206,47 @@
       text-align: left;
     }
 
-    .toc-list li {
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-      color: #0100ff;
+    .toc-item {
+      margin-bottom: 6px;
+    }
+
+    .toc-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 4px 6px;
+      margin: 0 -6px;
       display: flex;
       justify-content: space-between;
+      align-items: baseline;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #0100ff;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+      text-align: left;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .toc-btn:hover {
+      background-color: rgba(1, 0, 255, 0.08);
+      border-color: rgba(1, 0, 255, 0.15);
+    }
+
+    .toc-btn:active {
+      background-color: rgba(1, 0, 255, 0.16);
+    }
+
+    .toc-btn:focus-visible {
+      outline: 2px solid #0100ff;
+      outline-offset: 1px;
+    }
+
+    .toc-btn span {
+      pointer-events: none;
     }
   </style>
 </head>
@@ -233,18 +268,51 @@
         <p>Art 10c</p>
       </div>
 
+      <!-- PAGE 2: Empty Page before Table of Contents -->
+      <div class="page" data-density="soft"></div>
+
       <!-- PAGE 3: Table of Contents -->
       <div class="page" data-density="soft">
         <div>
           <div class="page-header-title">Table of Contents</div>
           <div class="page-content" style="justify-content: flex-start;">
             <ul class="toc-list">
-              <li><span>1. About me</span> <span>pg 1</span></li>
-              <li><span>2. Project 1 - Uncanny Valley</span> <span>pg 2-3</span></li>
-              <li><span>3. Project 2 - Quasi-object</span> <span>pg 4-5</span></li>
-              <li><span>4. Project 3</span> <span>pg 6-7</span></li>
-              <li><span>5. Mini Projects</span> <span>pg 8-9</span></li>
-              <li><span>6. How to reach me</span> <span>pg 10</span></li>
+              <li class="toc-item">
+                <button type="button" class="toc-btn" data-page="3">
+                  <span class="toc-title">1. About me</span>
+                  <span class="toc-pg">pg 1</span>
+                </button>
+              </li>
+              <li class="toc-item">
+                <button type="button" class="toc-btn" data-page="5">
+                  <span class="toc-title">2. Project 1 - Uncanny Valley</span>
+                  <span class="toc-pg">pg 2-3</span>
+                </button>
+              </li>
+              <li class="toc-item">
+                <button type="button" class="toc-btn" data-page="7">
+                  <span class="toc-title">3. Project 2 - Quasi-object</span>
+                  <span class="toc-pg">pg 4-5</span>
+                </button>
+              </li>
+              <li class="toc-item">
+                <button type="button" class="toc-btn" data-page="9">
+                  <span class="toc-title">4. Project 3</span>
+                  <span class="toc-pg">pg 6-7</span>
+                </button>
+              </li>
+              <li class="toc-item">
+                <button type="button" class="toc-btn" data-page="11">
+                  <span class="toc-title">5. Mini Projects</span>
+                  <span class="toc-pg">pg 8-9</span>
+                </button>
+              </li>
+              <li class="toc-item">
+                <button type="button" class="toc-btn" data-page="13">
+                  <span class="toc-title">6. How to reach me</span>
+                  <span class="toc-pg">pg 10</span>
+                </button>
+              </li>
             </ul>
           </div>
         </div>
@@ -387,7 +455,10 @@
         <div class="page-number">10</div>
       </div>
 
-      <!-- PAGE 15: Back Cover / Last Page -->
+      <!-- PAGE 15: Inside Back Cover (Empty Page) -->
+      <div class="page" data-density="soft"></div>
+
+      <!-- PAGE 16: Back Cover / Last Page -->
       <div class="page cover-page" data-density="hard">
         <h1>Thank You</h1>
         <p>Jazee’s Portfolio — 2026</p>
@@ -492,6 +563,45 @@
 
       bookEl.addEventListener('pointerdown', zoomOutToBook, true);
       bookEl.addEventListener('click', zoomOutToBook, true);
+
+      // Table of Contents interactive page navigation
+      const tocList = document.querySelector('.toc-list');
+      function handleTocNavigation(targetIndex) {
+        if (!pageFlip) return;
+        if (isZoomedIn) {
+          isZoomedIn = false;
+          bookWrapper.classList.remove('zoomed-in');
+          bookWrapper.style.transform = 'scale(1) translate(0px, 0px)';
+        }
+        const currentSpread = pageFlip.getPageCollection().getCurrentSpreadIndex();
+        const targetSpread = pageFlip.getPageCollection().getSpreadIndexByPage(targetIndex);
+        if (currentSpread === targetSpread) return;
+        try {
+          pageFlip.flip(targetIndex);
+        } catch (e) {
+          pageFlip.turnToPage(targetIndex);
+        }
+      }
+
+      if (tocList) {
+        tocList.addEventListener('pointerdown', function (e) {
+          const btn = e.target.closest('.toc-btn');
+          if (btn) {
+            e.stopPropagation();
+          }
+        });
+
+        tocList.addEventListener('click', function (e) {
+          const btn = e.target.closest('.toc-btn');
+          if (!btn) return;
+          e.preventDefault();
+          e.stopPropagation();
+          const targetPage = parseInt(btn.getAttribute('data-page'), 10);
+          if (!isNaN(targetPage)) {
+            handleTocNavigation(targetPage);
+          }
+        });
+      }
 
       // Interactive Frutiger Aero Bubble Physics background interaction
       const canvas = document.getElementById('bubble-canvas');
