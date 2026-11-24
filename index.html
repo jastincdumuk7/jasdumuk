@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jastin's Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <style>
     @font-face {
       font-family: 'Kulachat Serif';
-      src: local('Kulachat Serif SemiBold'), local('Times New Roman');
+      src: local('Kulachat Serif SemiBold'), local('Kulachat Serif'), local('KulachatSerif-SemiBold');
       font-weight: 600;
     }
 
@@ -18,9 +21,9 @@
     body {
       margin: 0;
       padding: 0;
-      /* Background replaced with skyflower.jpg */
+      background-color: #3a8ee6;
       background-image: url('images/skyflower.jpg');
-      background-size: center;
+      background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
@@ -31,9 +34,15 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      font-family: 'Kulachat Serif', 'Times New Roman', serif;
+      font-family: 'Kulachat Serif SemiBold', 'Kulachat Serif', 'Cormorant Garamond', 'Playfair Display', serif;
+      font-size: 0.55rem;
       position: relative;
       user-select: none;
+    }
+
+    /* Fallback Guy cursor */
+    html, body, * {
+      cursor: url('images/guy.png') 16 16, auto;
     }
 
     /* Interactive Bubble Canvas Layer */
@@ -43,11 +52,6 @@
       width: 100%;
       height: 100%;
       z-index: 1;
-      cursor: grab;
-    }
-
-    #bubble-canvas:active {
-      cursor: grabbing;
     }
 
     /* Full-screen responsive wrapper with a realistic book drop shadow behind it */
@@ -78,17 +82,20 @@
       pointer-events: auto;
     }
 
-    /* Page styling: #F7F7E9 background, #0100ff text, thicker type, center-aligned body text */
+    /* Page styling: #F7F7E9 background, #0100ff text, left-aligned, .5 times smaller text */
     .page {
       background-color: #F7F7E9 !important;
       color: #0100ff !important;
-      padding: 45px 50px;
+      padding: 38px 44px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       border: 1px solid rgba(1, 0, 255, 0.08);
       font-weight: 600;
+      font-size: 0.55rem;
+      line-height: 1.45;
+      text-align: left;
     }
 
     /* Realistic center binding shadow curvature on left and right pages */
@@ -102,100 +109,149 @@
       box-shadow: inset 22px 0 25px -12px rgba(0, 0, 0, 0.12);
     }
 
-    /* Cover / Title and Last Page Styling */
-    .page.cover-page {
-      background: linear-gradient(135deg, #F7F7E9 0%, #dedec4 100%);
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      border: 3px double #0100ff;
-    }
-
-    .cover-page h1 {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
-      color: #0100ff;
-      font-weight: 600;
-    }
-
-    .cover-page h3 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin: 5px 0;
-      color: #0100ff;
-    }
-
-    .cover-page p {
-      font-size: 1.1rem;
-      margin: 3px 0;
-      color: #0100ff;
-      font-weight: 600;
-    }
-
-    /* Cover image placeholder (2" x 1" proportion) */
-    .cover-image-placeholder {
-      width: 192px;
-      height: 96px;
-      border: 2px dashed #0100ff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 15px auto;
-      font-size: 0.8rem;
-      color: #0100ff;
-      background: rgba(1, 0, 255, 0.03);
-    }
-
-    /* Middle Pages Layout */
-    .page-header-title {
-      text-align: center;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #0100ff;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Body text centered vertically and horizontally */
-    .page-content {
+    /* Page Body Container */
+    .page-body {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      font-size: 0.98rem;
-      line-height: 1.6;
+      text-align: left;
+      overflow: hidden;
+    }
+
+    /* Cover / Title Page Styling (No text, TITLE .png only, centered, 1cm border, no shadow) */
+    .page.cover-page {
+      background: #F7F7E9 !important;
+      padding: 1cm !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      border: 3px double #0100ff;
+      box-shadow: none !important;
+    }
+
+    .cover-title-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      margin: auto;
+      border: none !important;
+      box-shadow: none !important;
+      filter: none !important;
+    }
+
+    /* Page 2: Before TOC image page */
+    .page.page-before-toc {
+      padding: 1cm !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      box-shadow: none !important;
+    }
+
+    .before-toc-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      margin: auto;
+      border: none !important;
+      box-shadow: none !important;
+      filter: none !important;
+    }
+
+    /* Page 5: About Me full image page */
+    .page.page-aboutme-img {
+      padding: 1cm !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      box-shadow: none !important;
+    }
+
+    .full-page-img {
+      max-width: 100%;
+      max-height: calc(100% - 24px);
+      object-fit: contain;
+      display: block;
+      margin: auto;
+      border: none !important;
+      box-shadow: none !important;
+      filter: none !important;
+    }
+
+    /* Headers: same size as body text, aligned left (except on Table of Contents) */
+    .page-header-title,
+    .project-tag {
+      font-size: 0.55rem;
+      font-weight: 600;
       color: #0100ff;
+      text-align: left;
+      margin: 0 0 8px 0;
+      line-height: 1.3;
+    }
+
+    .project-tag {
+      text-transform: lowercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    /* Table of Contents Header retains prominent size */
+    .toc-page .page-header-title {
+      font-size: 1.25rem;
+      font-weight: 600;
       text-align: center;
-      overflow-y: auto;
+      margin-bottom: 12px;
+      text-transform: none;
+    }
+
+    /* Body text: size .5x smaller, aligned left */
+    .page-content {
+      font-size: 0.55rem;
+      line-height: 1.48;
+      color: #0100ff;
+      text-align: left;
     }
 
     .page-content p {
-      margin-bottom: 12px;
+      font-size: 0.55rem;
+      line-height: 1.48;
+      margin: 0 0 8px 0;
       color: #0100ff;
+      text-align: left;
     }
 
     /* Image placeholder box on the top of the page: 2in x 1in proportion (192px x 96px) */
     .image-placeholder-top {
       width: 192px;
       height: 96px;
-      border: 2px dashed #0100ff;
+      border: 1.5px dashed #0100ff;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0 auto 15px auto;
-      font-size: 0.8rem;
+      margin: 0 0 12px 0;
+      font-size: 0.52rem;
       color: #0100ff;
       background: rgba(1, 0, 255, 0.03);
     }
 
-    /* Page number on bottom right in 9pt */
+    /* Page numbers stick to the very bottom of each page, centered */
     .page-number {
-      font-size: 9pt;
+      font-size: 0.55rem;
       color: #0100ff;
-      text-align: right;
-      margin-top: 5px;
+      text-align: center;
       font-weight: 600;
+      margin-top: auto;
+      padding-top: 6px;
+      width: 100%;
+    }
+
+    /* Table of Contents List & Hover Preview */
+    .toc-container {
+      position: relative;
+      width: 100%;
     }
 
     .toc-list {
@@ -219,10 +275,9 @@
       justify-content: space-between;
       align-items: baseline;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: #0100ff;
-      cursor: pointer;
       border-radius: 4px;
       transition: background-color 0.15s ease, border-color 0.15s ease;
       text-align: left;
@@ -247,6 +302,240 @@
     .toc-btn span {
       pointer-events: none;
     }
+
+    /* Floating Transparent 2-Page Spread Hover Preview over the lists */
+    .toc-hover-spread-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 330px;
+      height: 200px;
+      background: rgba(247, 247, 233, 0.82);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1.5px solid rgba(1, 0, 255, 0.4);
+      border-radius: 6px;
+      box-shadow: 0 16px 36px rgba(1, 0, 255, 0.18), 0 4px 12px rgba(0, 30, 80, 0.12);
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s;
+    }
+
+    .toc-hover-spread-card.active {
+      opacity: 1;
+      visibility: visible;
+      animation: floatSpreadHover 2.8s ease-in-out infinite;
+    }
+
+    @keyframes floatSpreadHover {
+      0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translate(-50%, -50%) translateY(-6px) rotate(0.4deg);
+      }
+    }
+
+    .mini-spread {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    .mini-page {
+      flex: 1;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mini-page-left {
+      border-right: none;
+      box-shadow: inset -10px 0 12px -8px rgba(1, 0, 255, 0.12);
+    }
+
+    .mini-page-right {
+      border-left: none;
+      box-shadow: inset 10px 0 12px -8px rgba(1, 0, 255, 0.12);
+    }
+
+    .mini-spine {
+      width: 1px;
+      background: rgba(1, 0, 255, 0.3);
+      height: 100%;
+      box-shadow: 0 0 5px rgba(1, 0, 255, 0.25);
+    }
+
+    .mini-title {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #0100ff;
+      text-align: center;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .mini-box {
+      border: 1px dashed #0100ff;
+      background: rgba(1, 0, 255, 0.04);
+      font-size: 0.48rem;
+      color: #0100ff;
+      text-align: center;
+      padding: 3px 2px;
+      margin-bottom: 4px;
+      font-weight: 600;
+      border-radius: 2px;
+    }
+
+    .mini-text {
+      font-size: 0.48rem;
+      line-height: 1.25;
+      color: #0100ff;
+      font-weight: 500;
+      opacity: 0.95;
+      text-align: justify;
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 6;
+      -webkit-box-orient: vertical;
+    }
+
+    .mini-num {
+      font-size: 0.52rem;
+      font-weight: 600;
+      color: #0100ff;
+      text-align: right;
+      margin-top: 3px;
+    }
+
+    /* Project 1 Custom Styles */
+    .uncanny-header-img {
+      max-width: 62%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      margin: 4px auto 10px auto;
+      border: none !important;
+      box-shadow: none !important;
+      filter: none !important;
+    }
+
+    .drafts-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      height: 135px; /* about 1/4 of the page */
+      margin-top: 10px;
+      margin-bottom: 6px;
+    }
+
+    .draft-col {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .draft-col img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border: none !important;
+      box-shadow: none !important;
+      filter: none !important;
+    }
+
+    .final-draft-large-img {
+      max-width: 82%;
+      max-height: 380px;
+      object-fit: contain;
+      display: block;
+      margin: 4px auto 14px auto;
+      border: none !important;
+      box-shadow: none !important;
+      filter: none !important;
+    }
+
+    /* Mini Projects Collage Layout */
+    .collage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 155px;
+      gap: 12px;
+      padding: 10px 0;
+      margin-top: 8px;
+      position: relative;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .collage-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(var(--rot, 0deg));
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0.25s;
+      cursor: pointer;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .collage-item:hover {
+      transform: rotate(0deg) scale(1.18);
+      z-index: 25;
+    }
+
+    .collage-item img {
+      max-width: 90%;
+      max-height: 120px;
+      object-fit: contain;
+      /* Very soft, non-harsh subtle shadow */
+      filter: drop-shadow(0 3px 6px rgba(1, 0, 255, 0.1));
+      transition: filter 0.2s ease;
+    }
+
+    .collage-item:hover img {
+      filter: drop-shadow(0 6px 14px rgba(1, 0, 255, 0.18));
+    }
+
+    .collage-tooltip {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: rgba(247, 247, 233, 0.95);
+      color: #0100ff;
+      font-family: inherit;
+      font-size: 0.5rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(1, 0, 255, 0.22);
+      box-shadow: 0 4px 10px rgba(1, 0, 255, 0.1);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      z-index: 30;
+    }
+
+    .collage-item:hover .collage-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -258,110 +547,134 @@
   <div class="book-wrapper zoomed-in" id="book-wrapper">
     <div id="book">
 
-      <!-- PAGE 1: Title Page (Cover with Image Support) -->
+      <!-- PAGE 1: Title Page (Cover: Only TITLE .png, centered, ~1cm sides, no shadows) -->
       <div class="page cover-page" data-density="hard">
-        <div class="cover-image-placeholder">Cover Image (2" x 1")</div>
-        <h3>Jastin Dumuk</h3>
-        <p>Graphic Design Student</p>
-        <p>Art 10c</p>
+        <img src="images/TITLE%20.png" alt="Title" class="cover-title-img">
       </div>
 
-      <!-- PAGE 2: Empty Page before Table of Contents -->
-      <div class="page" data-density="soft"></div>
+      <!-- PAGE 2: Page before Table of Contents: Centered BEFORE TOC .png, ~1cm sides, no shadows -->
+      <div class="page page-before-toc" data-density="soft">
+        <img src="images/BEFORE%20TOC.png" alt="Before TOC" class="before-toc-img">
+      </div>
 
       <!-- PAGE 3: Table of Contents -->
-      <div class="page" data-density="soft">
-        <div>
+      <div class="page toc-page" data-density="soft">
+        <div class="page-body">
           <div class="page-header-title">Table of Contents</div>
           <div class="page-content" style="justify-content: flex-start;">
-            <ul class="toc-list">
-              <li class="toc-item">
-                <button type="button" class="toc-btn" data-page="3">
-                  <span class="toc-title">1. About me</span>
-                  <span class="toc-pg">pg 1</span>
-                </button>
-              </li>
-              <li class="toc-item">
-                <button type="button" class="toc-btn" data-page="5">
-                  <span class="toc-title">2. Project 1 - Uncanny Valley</span>
-                  <span class="toc-pg">pg 2-3</span>
-                </button>
-              </li>
-              <li class="toc-item">
-                <button type="button" class="toc-btn" data-page="7">
-                  <span class="toc-title">3. Project 2 - Quasi-object</span>
-                  <span class="toc-pg">pg 4-5</span>
-                </button>
-              </li>
-              <li class="toc-item">
-                <button type="button" class="toc-btn" data-page="9">
-                  <span class="toc-title">4. Project 3</span>
-                  <span class="toc-pg">pg 6-7</span>
-                </button>
-              </li>
-              <li class="toc-item">
-                <button type="button" class="toc-btn" data-page="11">
-                  <span class="toc-title">5. Mini Projects</span>
-                  <span class="toc-pg">pg 8-9</span>
-                </button>
-              </li>
-              <li class="toc-item">
-                <button type="button" class="toc-btn" data-page="13">
-                  <span class="toc-title">6. How to reach me</span>
-                  <span class="toc-pg">pg 10</span>
-                </button>
-              </li>
-            </ul>
+            <div class="toc-container">
+              <ul class="toc-list">
+                <li class="toc-item">
+                  <button type="button" class="toc-btn" data-page="3" data-preview="about">
+                    <span class="toc-title">1. About me</span>
+                    <span class="toc-pg">pg 1</span>
+                  </button>
+                </li>
+                <li class="toc-item">
+                  <button type="button" class="toc-btn" data-page="5" data-preview="project1">
+                    <span class="toc-title">2. Project 1 - Uncanny Valley</span>
+                    <span class="toc-pg">pg 2-3</span>
+                  </button>
+                </li>
+                <li class="toc-item">
+                  <button type="button" class="toc-btn" data-page="7" data-preview="project2">
+                    <span class="toc-title">3. Project 2 - Quasi-object</span>
+                    <span class="toc-pg">pg 4-5</span>
+                  </button>
+                </li>
+                <li class="toc-item">
+                  <button type="button" class="toc-btn" data-page="9" data-preview="project3">
+                    <span class="toc-title">4. Project 3</span>
+                    <span class="toc-pg">pg 6-7</span>
+                  </button>
+                </li>
+                <li class="toc-item">
+                  <button type="button" class="toc-btn" data-page="11" data-preview="mini">
+                    <span class="toc-title">5. Mini Projects</span>
+                    <span class="toc-pg">pg 8-9</span>
+                  </button>
+                </li>
+                <li class="toc-item">
+                  <button type="button" class="toc-btn" data-page="13" data-preview="reach">
+                    <span class="toc-title">6. How to reach me</span>
+                    <span class="toc-pg">pg 10</span>
+                  </button>
+                </li>
+              </ul>
+
+              <!-- Floating Transparent 2-Page Spread Hover Preview over the lists -->
+              <div class="toc-hover-spread-card" id="toc-hover-spread-card" aria-hidden="true">
+                <div class="mini-spread">
+                  <div class="mini-page mini-page-left" id="mini-page-left">
+                    <div class="mini-title" id="mini-title-left">About Me</div>
+                    <div class="mini-box" id="mini-box-left" style="display:none;"></div>
+                    <div class="mini-text" id="mini-text-left">...</div>
+                    <div class="mini-num" id="mini-num-left">1</div>
+                  </div>
+                  <div class="mini-spine"></div>
+                  <div class="mini-page mini-page-right" id="mini-page-right">
+                    <div class="mini-title" id="mini-title-right">About Me</div>
+                    <div class="mini-box" id="mini-box-right" style="display:none;"></div>
+                    <div class="mini-text" id="mini-text-right">...</div>
+                    <div class="mini-num" id="mini-num-right">2</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- PAGE 4 (Spread 1 Left): About Me - pg 1 -->
+      <!-- PAGE 4 (Spread 1 Left): About Me - pg 1 (Text moved to left side, no 2x1 placeholder) -->
       <div class="page" data-density="soft">
-        <div>
+        <div class="page-body">
           <div class="page-header-title">About Me</div>
-          <div class="image-placeholder-top">Image (2" x 1")</div>
           <div class="page-content">
             <p>Hey, my name’s Jastin! I’m currently studying graphic design and broadening my experience in art and design.</p>
             <p>Design and art are crafts I’ve always been surrounded by. It has taught me to figure out the world visually and shape my perspective in what I see is important in my life.</p>
+            <p>I’ve found them to be my way of communicating what I want to see more in the world. I make sure that what I make represents something about me whatever it may be.</p>
+            <p>I’ve always pictured a world that had more life and color. It’s filled with an exceeding amount of corrupt and negative people and issues and with that I think people should be able to escape and be surrounded by things that give them happiness and life. My escape for example is when I create. We only live one life and we should make the most out of it without having to deal with the destruction of our world and everything in it.</p>
           </div>
         </div>
         <div class="page-number">1</div>
       </div>
 
-      <!-- PAGE 5 (Spread 1 Right): About Me (Cont.) -->
-      <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">About Me (Cont.)</div>
-          <div class="page-content">
-            <p>I’ve found them to be my way of communicating what I want to see more in the world. I make sure that what I make represents something about me whatever it may be.</p>
-            <p>I’ve always pictured a world that had more life and color. It’s filled with an exceeding amount of corrupt and negative people and issues and with that I think people should be able to escape and be surrounded by things that give them happiness and life. My escape for example is when I create. We only live one life and we should make the most out of it without having to deal with the destruction of our world and everything in it.</p>
-          </div>
-        </div>
+      <!-- PAGE 5 (Spread 1 Right): About Me (Image: only aboutme.png, ~1cm sides, no shadow) -->
+      <div class="page page-aboutme-img" data-density="soft">
+        <img src="images/aboutme.png" alt="About Me" class="full-page-img">
         <div class="page-number">2</div>
       </div>
 
       <!-- PAGE 6 (Spread 2 Left): Project 1 - Uncanny Valley (Pg 2) -->
       <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Project 1 - Uncanny Valley</div>
-          <div class="image-placeholder-top">Drafts (2" x 1")</div>
+        <div class="page-body">
+          <div class="project-tag">project 1</div>
+          <img src="images/UNCANNY%20VALLEY.png" alt="UNCANNY VALLEY" class="uncanny-header-img">
           <div class="page-content">
-            <p><strong>Proposal:</strong></p>
-            <p>For this first project I want to lean into the surrealism of the “uncanny valley” effect. I love the idea of having an element of the poster look unsettling, but then I thought that maybe I wanted something that looked like a vomit of colors and weirdness while still having that semi realistic vibe to it since I had more images that I could use to portray that. I want the poster to also reminisce about nostalgia and childhood.</p>
-            <p><em>*Drafts (Folder: BLENDERR / dumuk)*</em></p>
+            <p><strong>Proposal:</strong> For this first project I want to lean into the surrealism of the “uncanny valley” effect. I love the idea of having an element of the poster look unsettling, but then I thought that maybe I wanted something that looked like a vomit of colors and weirdness while still having that semi realistic vibe to it since I had more images that I could use to portray that. I want the poster to also reminisce about nostalgia and childhood.</p>
+            <div class="drafts-row">
+              <div class="draft-col">
+                <img src="images/draft%201.png" alt="Draft 1">
+              </div>
+              <div class="draft-col">
+                <img src="images/draft%202.png" alt="Draft 2">
+              </div>
+              <div class="draft-col">
+                <img src="images/final%20draft%203.png" alt="Final Draft 3">
+              </div>
+            </div>
           </div>
         </div>
         <div class="page-number">2</div>
       </div>
 
-      <!-- PAGE 7 (Spread 2 Right): Project 1 - Uncanny Valley (Pg 3) -->
+      <!-- PAGE 7 (Spread 2 Right): Project 1 - Final (Pg 3) -->
       <div class="page" data-density="soft">
-        <div>
-          <div class="page-header-title">Uncanny Valley (Final)</div>
+        <div class="page-body">
+          <div class="project-tag">project 1</div>
+          <img src="images/final%20draft%203.png" alt="Final Draft 3" class="final-draft-large-img">
           <div class="page-content">
             <p>I ended up going on a fun and playful route for this project. I thought that incorporating an “Alice in Wonderland” like weirdness made more sense in my eyes. It may look like nonsense to others but to me it’s a representation of what I find somewhat comedic.</p>
-            <p><em>*Final draft*</em></p>
           </div>
         </div>
         <div class="page-number">3</div>
@@ -369,7 +682,7 @@
 
       <!-- PAGE 8 (Spread 3 Left): Project 2 - Quasi-object (Pg 4) -->
       <div class="page" data-density="soft">
-        <div>
+        <div class="page-body">
           <div class="page-header-title">Project 2 - Quasi-object</div>
           <div class="image-placeholder-top">References (2" x 1")</div>
           <div class="page-content">
@@ -381,9 +694,9 @@
         <div class="page-number">4</div>
       </div>
 
-      <!-- PAGE 9 (Spread 3 Right): Project 2 - Quasi-object (Pg 5) -->
+      <!-- PAGE 9 (Spread 3 Right): Project 2 - Quasi-object (Final) (Pg 5) -->
       <div class="page" data-density="soft">
-        <div>
+        <div class="page-body">
           <div class="page-header-title">Quasi-object (Final)</div>
           <div class="page-content">
             <p><em>*Final*</em></p>
@@ -395,7 +708,7 @@
 
       <!-- PAGE 10 (Spread 4 Left): Project 3 - Time Based Video (Pg 6) -->
       <div class="page" data-density="soft">
-        <div>
+        <div class="page-body">
           <div class="page-header-title">Project 3 - Time Based Video</div>
           <div class="image-placeholder-top">Media (2" x 1")</div>
           <div class="page-content">
@@ -405,9 +718,9 @@
         <div class="page-number">6</div>
       </div>
 
-      <!-- PAGE 11 (Spread 4 Right): Project 3 (Pg 7) -->
+      <!-- PAGE 11 (Spread 4 Right): Project 3 (Cont.) (Pg 7) -->
       <div class="page" data-density="soft">
-        <div>
+        <div class="page-body">
           <div class="page-header-title">Project 3 (Cont.)</div>
           <div class="page-content">
             <p>Time-based multimedia video explorations and storyboards referencing asset folders <strong>BLENDERR</strong> and <strong>dumuk</strong>.</p>
@@ -416,24 +729,69 @@
         <div class="page-number">7</div>
       </div>
 
-      <!-- PAGE 12 (Spread 5 Left): Mini Projects (Pg 8) -->
+      <!-- PAGE 12 (Spread 5 Left): Mini Projects (Pg 8 - Scattered Collage) -->
       <div class="page" data-density="soft">
-        <div>
+        <div class="page-body">
           <div class="page-header-title">Mini Projects</div>
-          <div class="image-placeholder-top">Image (2" x 1")</div>
-          <div class="page-content">
-            <p>Collection of exploratory graphic design exercises and quick concept iterations.</p>
+          <div class="collage-grid">
+            <div class="collage-item" style="--rot: -3deg;">
+              <img src="images/erm%20duck.png" alt="Erm Duck">
+              <span class="collage-tooltip">Erm Duck</span>
+            </div>
+            <div class="collage-item" style="--rot: 4deg;">
+              <img src="images/flower.png" alt="Flower">
+              <span class="collage-tooltip">Flower</span>
+            </div>
+            <div class="collage-item" style="--rot: -2deg;">
+              <img src="images/HECTOR%20THE%20COLLECTOR.png" alt="Hector the Collector">
+              <span class="collage-tooltip">Hector the Collector</span>
+            </div>
+            <div class="collage-item" style="--rot: 3deg;">
+              <img src="images/guy.png" alt="Guy">
+              <span class="collage-tooltip">Guy</span>
+            </div>
+            <div class="collage-item" style="--rot: -4deg;">
+              <img src="images/CHESSYYY.png" alt="Chessyyy">
+              <span class="collage-tooltip">Chessyyy</span>
+            </div>
+            <div class="collage-item" style="--rot: 2deg;">
+              <img src="images/ABE%20LINC%20HAT.png" alt="Abe Linc Hat">
+              <span class="collage-tooltip">Abe Linc Hat</span>
+            </div>
           </div>
         </div>
         <div class="page-number">8</div>
       </div>
 
-      <!-- PAGE 13 (Spread 5 Right): Mini Projects (Pg 9) -->
+      <!-- PAGE 13 (Spread 5 Right): Mini Projects (Cont.) (Pg 9 - Scattered Collage) -->
       <div class="page" data-density="soft">
-        <div>
+        <div class="page-body">
           <div class="page-header-title">Mini Projects (Cont.)</div>
-          <div class="page-content">
-            <p>Further experimentation with typography, composition, and color theory.</p>
+          <div class="collage-grid">
+            <div class="collage-item" style="--rot: 3deg;">
+              <img src="images/FROGLAND.png" alt="Frogland">
+              <span class="collage-tooltip">Frogland</span>
+            </div>
+            <div class="collage-item" style="--rot: -4deg;">
+              <img src="images/unicorn.png" alt="Unicorn">
+              <span class="collage-tooltip">Unicorn</span>
+            </div>
+            <div class="collage-item" style="--rot: 2deg;">
+              <img src="images/ABE%20LINC.png" alt="Abe Linc">
+              <span class="collage-tooltip">Abe Linc</span>
+            </div>
+            <div class="collage-item" style="--rot: -3deg;">
+              <img src="images/THE%20ACROBATS%20MAGIC.png" alt="The Acrobats Magic">
+              <span class="collage-tooltip">The Acrobats Magic</span>
+            </div>
+            <div class="collage-item" style="--rot: 4deg;">
+              <img src="images/FURBALLpng.png" alt="Furball">
+              <span class="collage-tooltip">Furball</span>
+            </div>
+            <div class="collage-item" style="--rot: -2deg;">
+              <img src="images/VASE%20YES.png" alt="Vase Yes">
+              <span class="collage-tooltip">Vase Yes</span>
+            </div>
           </div>
         </div>
         <div class="page-number">9</div>
@@ -441,7 +799,7 @@
 
       <!-- PAGE 14 (Spread 6 Left): How to Reach Me (Pg 10) -->
       <div class="page" data-density="soft">
-        <div>
+        <div class="page-body">
           <div class="page-header-title">How to Reach Me</div>
           <div class="image-placeholder-top">Image (2" x 1")</div>
           <div class="page-content">
@@ -458,8 +816,10 @@
 
       <!-- PAGE 16: Back Cover / Last Page -->
       <div class="page cover-page" data-density="hard">
-        <h1>Thank You</h1>
-        <p>Jazee’s Portfolio — 2026</p>
+        <div class="page-body" style="align-items: center; justify-content: center; text-align: center;">
+          <h1 style="font-size: 1.5rem; margin-bottom: 8px; color: #0100ff;">Thank You</h1>
+          <p style="font-size: 0.65rem; color: #0100ff;">Jazee’s Portfolio — 2026</p>
+        </div>
       </div>
 
     </div>
@@ -493,54 +853,45 @@
 
       pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
-      // Dynamically zoom into the single title page to fill the screen on load
+      // Dynamically zoom into the single title page to center it perfectly on screen on load
       let isZoomedIn = true;
 
       function applyInitialFullScreenZoom() {
         if (!isZoomedIn) return;
-        const rect = bookEl.getBoundingClientRect();
-        // Currently scaled by CSS default (2.2), compute exact unscaled dimensions
-        const currentScale = 2.2;
-        const baseWidth = rect.width / currentScale;
-        const baseHeight = rect.height / currentScale;
 
-        // Calculate scale so the single title page covers the full viewport
-        const scaleX = window.innerWidth / baseWidth;
-        const scaleY = window.innerHeight / baseHeight;
-        const fillScale = Math.max(scaleX, scaleY);
+        // Reset transform temporarily to measure natural unscaled dimensions
+        bookWrapper.style.transition = 'none';
+        bookWrapper.style.transform = 'none';
+        void bookWrapper.offsetWidth; // Force layout
 
-        // Because PageFlip with showCover:true centers the closed cover inside a 2-page spread container
-        // or aligns it on the right half depending on state, check actual cover element position:
-        const coverPage = bookEl.querySelector('.page');
+        const coverPage = bookEl.querySelector('.page.cover-page');
         if (coverPage) {
           const coverRect = coverPage.getBoundingClientRect();
-          const coverBaseW = coverRect.width / currentScale;
-          const coverBaseH = coverRect.height / currentScale;
-          const exactScale = Math.max(window.innerWidth / coverBaseW, window.innerHeight / coverBaseH);
+          const targetW = window.innerWidth * 0.94;
+          const targetH = window.innerHeight * 0.94;
+          const fitScale = Math.min(targetW / coverRect.width, targetH / coverRect.height);
 
-          // Center offset of the cover page relative to bookWrapper center
-          const wrapperRect = bookWrapper.getBoundingClientRect();
-          const wrapperCenterX = wrapperRect.left + wrapperRect.width / 2;
-          const wrapperCenterY = wrapperRect.top + wrapperRect.height / 2;
+          // Center of the cover page in viewport coords
           const coverCenterX = coverRect.left + coverRect.width / 2;
           const coverCenterY = coverRect.top + coverRect.height / 2;
 
-          const offsetX = (wrapperCenterX - coverCenterX) / currentScale;
-          const offsetY = (wrapperCenterY - coverCenterY) / currentScale;
+          // Viewport center
+          const vpX = window.innerWidth / 2;
+          const vpY = window.innerHeight / 2;
 
-          bookWrapper.style.transition = 'none';
-          bookWrapper.style.transform = `scale(${exactScale}) translate(${offsetX}px, ${offsetY}px)`;
-          // Force reflow then restore smooth transition
+          const dx = vpX - coverCenterX;
+          const dy = vpY - coverCenterY;
+
+          bookWrapper.style.transformOrigin = `${coverCenterX}px ${coverCenterY}px`;
+          bookWrapper.style.transform = `translate(${dx}px, ${dy}px) scale(${fitScale})`;
           void bookWrapper.offsetWidth;
           bookWrapper.style.transition = 'transform 0.9s cubic-bezier(0.22, 1, 0.36, 1)';
-        } else {
-          bookWrapper.style.transform = `scale(${fillScale})`;
         }
       }
 
       // Run zoom calculation right after PageFlip finishes positioning the cover
       requestAnimationFrame(() => {
-        setTimeout(applyInitialFullScreenZoom, 50);
+        setTimeout(applyInitialFullScreenZoom, 60);
       });
 
       window.addEventListener('resize', () => {
@@ -556,6 +907,7 @@
         e.preventDefault();
         isZoomedIn = false;
         bookWrapper.classList.remove('zoomed-in');
+        bookWrapper.style.transformOrigin = 'center center';
         bookWrapper.style.transform = 'scale(1) translate(0px, 0px)';
       }
 
@@ -569,14 +921,14 @@
         if (isZoomedIn) {
           isZoomedIn = false;
           bookWrapper.classList.remove('zoomed-in');
+          bookWrapper.style.transformOrigin = 'center center';
           bookWrapper.style.transform = 'scale(1) translate(0px, 0px)';
         }
         const currentSpread = pageFlip.getPageCollection().getCurrentSpreadIndex();
-        const targetSpread = pageFlip.getPageCollection().getSpreadIndexByPage(targetIndex);
-        if (currentSpread === targetSpread) return;
-        try {
+        const targetSpread = Math.floor(targetIndex / 2);
+        if (currentSpread === targetSpread) {
           pageFlip.flip(targetIndex);
-        } catch (e) {
+        } else {
           pageFlip.turnToPage(targetIndex);
         }
       }
@@ -600,6 +952,183 @@
           }
         });
       }
+
+      // Data dictionary for 2-Page Hover Spreads on Table of Contents
+      const tocPreviewData = {
+        about: {
+          left: {
+            title: "About Me",
+            box: null,
+            text: "Hey, my name’s Jastin! I’m currently studying graphic design and broadening my experience in art and design. Design and art are crafts I’ve always been surrounded by...",
+            pg: "1"
+          },
+          right: {
+            title: "About Me",
+            box: "aboutme.png",
+            text: "Visual artwork representation and illustration.",
+            pg: "2"
+          }
+        },
+        project1: {
+          left: {
+            title: "project 1",
+            box: "UNCANNY VALLEY",
+            text: "Proposal: For this first project I want to lean into the surrealism of the “uncanny valley” effect. Something that looked like a vomit of colors and weirdness...\nDrafts 1, 2, 3.",
+            pg: "2"
+          },
+          right: {
+            title: "project 1",
+            box: "final draft 3.png",
+            text: "Final artwork exploration: incorporating an “Alice in Wonderland” like weirdness, playful route and comedic representation.",
+            pg: "3"
+          }
+        },
+        project2: {
+          left: {
+            title: "Project 2 - Quasi-object",
+            box: "References (2\" x 1\")",
+            text: "Proposal: For this project I decided to get inspiration from my Pingu keychain who kind of looks like a cowboy sheriff. Stop motion inspiration from Pingu.",
+            pg: "4"
+          },
+          right: {
+            title: "Quasi-object (Final)",
+            box: null,
+            text: "Detailed exploration of the Pingu cowboy concept, integrating stop-motion aesthetic principles into digital 3D/graphic composition.",
+            pg: "5"
+          }
+        },
+        project3: {
+          left: {
+            title: "Project 3 - Time Based Video",
+            box: "Media (2\" x 1\")",
+            text: "Soon to be added\nTime-based multimedia video explorations and storyboards.",
+            pg: "6"
+          },
+          right: {
+            title: "Project 3 (Cont.)",
+            box: null,
+            text: "Time-based multimedia video explorations and storyboards referencing asset folders BLENDERR and dumuk.",
+            pg: "7"
+          }
+        },
+        mini: {
+          left: {
+            title: "Mini Projects",
+            box: "Scattered Collage",
+            text: "Erm Duck, Flower, Hector the Collector, Guy, Chessyyy, Abe Linc Hat.",
+            pg: "8"
+          },
+          right: {
+            title: "Mini Projects (Cont.)",
+            box: "Scattered Collage",
+            text: "Frogland, Unicorn, Abe Linc, The Acrobats Magic, Furball, Vase Yes.",
+            pg: "9"
+          }
+        },
+        reach: {
+          left: {
+            title: "How to Reach Me",
+            box: "Image (2\" x 1\")",
+            text: "Feel free to reach out for collaborations, project inquiries, or design discussions!\nEmail: student@art10c.edu\nAssets: /BLENDERR /dumuk",
+            pg: "10"
+          },
+          right: {
+            title: "Thank You",
+            box: null,
+            text: "Jazee’s Portfolio — 2026\nInside Back Cover",
+            pg: ""
+          }
+        }
+      };
+
+      const previewCard = document.getElementById('toc-hover-spread-card');
+      const miniTitleL = document.getElementById('mini-title-left');
+      const miniBoxL = document.getElementById('mini-box-left');
+      const miniTextL = document.getElementById('mini-text-left');
+      const miniNumL = document.getElementById('mini-num-left');
+
+      const miniTitleR = document.getElementById('mini-title-right');
+      const miniBoxR = document.getElementById('mini-box-right');
+      const miniTextR = document.getElementById('mini-text-right');
+      const miniNumR = document.getElementById('mini-num-right');
+
+      function updatePreviewContent(key) {
+        const data = tocPreviewData[key];
+        if (!data || !previewCard) return;
+
+        miniTitleL.textContent = data.left.title;
+        if (data.left.box) {
+          miniBoxL.textContent = data.left.box;
+          miniBoxL.style.display = 'block';
+        } else {
+          miniBoxL.style.display = 'none';
+        }
+        miniTextL.textContent = data.left.text;
+        miniNumL.textContent = data.left.pg || '';
+
+        miniTitleR.textContent = data.right.title;
+        if (data.right.box) {
+          miniBoxR.textContent = data.right.box;
+          miniBoxR.style.display = 'block';
+        } else {
+          miniBoxR.style.display = 'none';
+        }
+        miniTextR.textContent = data.right.text;
+        miniNumR.textContent = data.right.pg || '';
+      }
+
+      const tocButtons = document.querySelectorAll('.toc-btn');
+      tocButtons.forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+          const key = btn.getAttribute('data-preview');
+          if (key && tocPreviewData[key]) {
+            updatePreviewContent(key);
+            previewCard.classList.add('active');
+          }
+        });
+      });
+
+      const tocContainer = document.querySelector('.toc-container');
+      if (tocContainer) {
+        tocContainer.addEventListener('mouseleave', () => {
+          if (previewCard) {
+            previewCard.classList.remove('active');
+          }
+        });
+      }
+
+      // Custom Guy Cursor: loads images/guy.png, scales onto canvas, sets high-perf cursor style
+      const guyCursorImg = new Image();
+      guyCursorImg.src = 'images/guy.png';
+      guyCursorImg.onload = () => {
+        const c = document.createElement('canvas');
+        c.width = 36;
+        c.height = 36;
+        const cCtx = c.getContext('2d');
+        const aspect = guyCursorImg.naturalWidth / guyCursorImg.naturalHeight;
+        let dw = 36, dh = 36;
+        if (aspect > 1) {
+          dh = 36 / aspect;
+        } else {
+          dw = 36 * aspect;
+        }
+        const dx = (36 - dw) / 2;
+        const dy = (36 - dh) / 2;
+        cCtx.drawImage(guyCursorImg, dx, dy, dw, dh);
+        const cursorUrl = c.toDataURL('image/png');
+
+        const cursorStyle = document.createElement('style');
+        cursorStyle.id = 'guy-cursor-style';
+        cursorStyle.textContent = `
+          html, body, *, *::before, *::after {
+            cursor: url("${cursorUrl}") 18 18, auto !important;
+          }
+          button, a, .toc-btn, input, select, textarea, [role="button"], #bubble-canvas, .book-wrapper.zoomed-in, .book-wrapper.zoomed-in #book, .page {
+            cursor: url("${cursorUrl}") 18 18, pointer !important;
+          }
+        `;
+        document.head.appendChild(cursorStyle);
+      };
 
       // Interactive Frutiger Aero Bubble Physics background interaction
       const canvas = document.getElementById('bubble-canvas');
@@ -630,6 +1159,101 @@
         mouse.y = -9999;
         mouse.lastX = -9999;
         mouse.lastY = -9999;
+      });
+
+      // Floating Animated Assets: flower, unicorn, guy
+      const floatingAssetSources = [
+        { id: 'flower', src: 'images/flower.png' },
+        { id: 'unicorn', src: 'images/unicorn.png' },
+        { id: 'guy', src: 'images/guy.png' }
+      ];
+
+      const floatingImages = floatingAssetSources.map(asset => {
+        const img = new Image();
+        img.src = asset.src;
+        return img;
+      });
+
+      class FloatingItem {
+        constructor(img, x, y) {
+          this.img = img;
+          this.x = x ?? Math.random() * width;
+          this.y = y ?? (height + Math.random() * 250);
+          this.size = 55 + Math.random() * 25; // 55-80px
+          this.baseVy = -(0.4 + Math.random() * 0.7);
+          this.vx = (Math.random() - 0.5) * 0.6;
+          this.vy = this.baseVy;
+          this.wobbleOffset = Math.random() * Math.PI * 2;
+          this.wobbleSpeed = 0.012 + Math.random() * 0.018;
+          this.rotAngle = (Math.random() - 0.5) * 0.4;
+          this.rotSpeed = (Math.random() - 0.5) * 0.01;
+          this.pulseOffset = Math.random() * Math.PI * 2;
+        }
+
+        update() {
+          this.wobbleOffset += this.wobbleSpeed;
+          this.pulseOffset += 0.025;
+          this.rotAngle += this.rotSpeed;
+
+          const dx = this.x - mouse.x;
+          const dy = this.y - mouse.y;
+          const dist = Math.hypot(dx, dy);
+          const interactRadius = this.size + 110;
+
+          if (dist < interactRadius && dist > 0) {
+            const force = (1 - dist / interactRadius);
+            const angle = Math.atan2(dy, dx);
+            this.vx += Math.cos(angle) * force * 1.5 + mouse.vx * force * 0.08;
+            this.vy += Math.sin(angle) * force * 1.5 + mouse.vy * force * 0.08;
+            this.rotAngle += (this.vx > 0 ? 0.02 : -0.02) * force;
+          }
+
+          this.vx *= 0.94;
+          this.vy += (this.baseVy - this.vy) * 0.04;
+          this.rotSpeed *= 0.985;
+          this.x += this.vx + Math.sin(this.wobbleOffset) * 0.45;
+          this.y += this.vy;
+
+          if (this.y < -this.size * 2) {
+            this.y = height + this.size * 2;
+            this.x = Math.random() * width;
+            this.vx = 0;
+            this.vy = this.baseVy;
+          }
+        }
+
+        draw() {
+          if (!this.img.complete || this.img.naturalWidth === 0) return;
+          ctx.save();
+          ctx.translate(this.x, this.y);
+
+          const scale = 1 + Math.sin(this.pulseOffset) * 0.07;
+          ctx.rotate(this.rotAngle);
+          ctx.scale(scale, scale);
+
+          const aspect = this.img.naturalWidth / this.img.naturalHeight;
+          let drawW = this.size;
+          let drawH = this.size;
+          if (aspect > 1) {
+            drawH = this.size / aspect;
+          } else {
+            drawW = this.size * aspect;
+          }
+
+          ctx.shadowColor = 'rgba(0, 30, 90, 0.22)';
+          ctx.shadowBlur = 12;
+          ctx.shadowOffsetY = 4;
+
+          ctx.drawImage(this.img, -drawW / 2, -drawH / 2, drawW, drawH);
+          ctx.restore();
+        }
+      }
+
+      const floatingItems = [];
+      floatingImages.forEach(img => {
+        for (let i = 0; i < 3; i++) {
+          floatingItems.push(new FloatingItem(img, Math.random() * width, Math.random() * height));
+        }
       });
 
       class Bubble {
@@ -724,6 +1348,16 @@
       }
 
       canvas.addEventListener('click', (e) => {
+        // Boost floating animated items if clicked near them
+        for (let i = 0; i < floatingItems.length; i++) {
+          const item = floatingItems[i];
+          if (Math.hypot(e.clientX - item.x, e.clientY - item.y) <= item.size + 20) {
+            item.vy -= 4;
+            item.vx += (Math.random() - 0.5) * 5;
+            item.rotSpeed += (Math.random() - 0.5) * 0.25;
+          }
+        }
+
         let popped = false;
         for (let i = bubbles.length - 1; i >= 0; i--) {
           const b = bubbles[i];
@@ -756,6 +1390,14 @@
 
       function animate() {
         ctx.clearRect(0, 0, width, height);
+
+        // Update and draw animated floating assets (flower, unicorn, guy)
+        for (let i = 0; i < floatingItems.length; i++) {
+          floatingItems[i].update();
+          floatingItems[i].draw();
+        }
+
+        // Update and draw bubbles
         for (let i = bubbles.length - 1; i >= 0; i--) {
           bubbles[i].update();
           bubbles[i].draw();
